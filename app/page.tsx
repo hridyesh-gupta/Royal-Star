@@ -5,7 +5,6 @@ import HeroSection from '@/components/HeroSection';
 import ChefSpecialSection from '@/components/ChefSpecialSection';
 import BrandValuesSection from '@/components/BrandValuesSection';
 import SpecialOffersSection from '@/components/SpecialOffersSection';
-import EventsSection from '@/components/EventsSection';
 
 export default function Home() {
   return (
@@ -16,7 +15,6 @@ export default function Home() {
         <ChefSpecialSection />
         <BrandValuesSection />
         <SpecialOffersSection />
-        <EventsSection />
       </main>
       <Footer />
     </div>

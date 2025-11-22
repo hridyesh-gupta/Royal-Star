@@ -30,7 +30,8 @@ export default function Header() {
           <Link href="/" className="cursor-pointer">
             <div className="flex items-center">
               <img 
-                src="https://static.readdy.ai/image/d8d2cb7f50a8dd49f4a2ee558dead2a7/b61ee4a13a9d6045fa7fc64f195e7bcb.png" 
+                // src="https://static.readdy.ai/image/d8d2cb7f50a8dd49f4a2ee558dead2a7/b61ee4a13a9d6045fa7fc64f195e7bcb.png" 
+                src="/Logo.jpg"
                 alt="Royal Star Cafe Logo" 
                 className="h-12 w-auto"
               />
@@ -48,6 +49,11 @@ export default function Header() {
               isScrolled ? 'text-amber-900' : 'text-white'
             } hover:text-orange-500 font-medium transition-colors cursor-pointer`}>
               {language === 'fr' ? 'Menu' : 'Menu'}
+            </Link>
+            <Link href="/events" className={`${
+              isScrolled ? 'text-amber-900' : 'text-white'
+            } hover:text-orange-500 font-medium transition-colors cursor-pointer`}>
+              {language === 'fr' ? 'Événements' : 'Events'}
             </Link>
             <Link href="/contact" className={`${
               isScrolled ? 'text-amber-900' : 'text-white'
@@ -85,7 +91,7 @@ export default function Header() {
                 FR
               </button>
             </div>
-            <Link href="/contact" className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-full font-medium transition-colors whitespace-nowrap cursor-pointer">
+            <Link href="/reservation" className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-full font-medium transition-colors whitespace-nowrap cursor-pointer">
               {language === 'fr' ? 'Réserver une table' : 'Reserve Table'}
             </Link>
           </nav>
@@ -111,6 +117,9 @@ export default function Header() {
               <Link href="/menu" className="text-amber-900 hover:text-orange-500 font-medium transition-colors cursor-pointer">
                 {language === 'fr' ? 'Menu' : 'Menu'}
               </Link>
+              <Link href="/events" className="text-amber-900 hover:text-orange-500 font-medium transition-colors cursor-pointer">
+                {language === 'fr' ? 'Événements' : 'Events'}
+              </Link>
               <Link href="/contact" className="text-amber-900 hover:text-orange-500 font-medium transition-colors cursor-pointer">
                 {language === 'fr' ? 'Contact' : 'Contact'}
               </Link>
@@ -118,7 +127,7 @@ export default function Header() {
                 <i className="ri-shopping-cart-line"></i>
                 {language === 'fr' ? 'Panier' : 'Cart'}
               </Link>
-              <Link href="/contact" className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-full font-medium transition-colors text-center whitespace-nowrap cursor-pointer">
+              <Link href="/reservation" className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-full font-medium transition-colors text-center whitespace-nowrap cursor-pointer">
                 {language === 'fr' ? 'Réserver une table' : 'Reserve Table'}
               </Link>
               <div className="flex items-center justify-between pt-2">

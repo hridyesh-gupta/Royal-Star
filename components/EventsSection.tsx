@@ -67,47 +67,61 @@ export default function EventsSection() {
           ))}
         </div>
 
-        <div className="text-center">
-          <div className="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
-            <h3 className="text-3xl font-bold text-amber-900 mb-4" style={{ fontFamily: 'var(--font-pacifico)' }}>
-              {language === 'fr' ? 'Salle privée disponible' : 'Private Dining Available'}
-            </h3>
-            <p className="text-amber-800 mb-6">
-              {language === 'fr'
-                ? 'Organisez vos occasions spéciales dans notre élégante salle à manger privée. Parfaite pour les célébrations, les dîners d’affaires et les réunions intimes.'
-                : 'Host your special occasions in our elegant private dining room. Perfect for celebrations, business dinners, and intimate gatherings.'}
-            </p>
-            <div className="flex items-center justify-center space-x-8 text-amber-700 mb-6">
-              <div className="text-center">
-                <div className="w-8 h-8 flex items-center justify-center mx-auto mb-2">
-                  <i className="ri-group-line text-xl"></i>
-                </div>
-                <span className="text-sm font-medium">
-                  {language === 'fr' ? 'Jusqu’à 20 convives' : 'Up to 20 guests'}
-                </span>
-              </div>
-              <div className="text-center">
-                <div className="w-8 h-8 flex items-center justify-center mx-auto mb-2">
-                  <i className="ri-restaurant-line text-xl"></i>
-                </div>
-                <span className="text-sm font-medium">
-                  {language === 'fr' ? 'Menus personnalisés' : 'Custom menus'}
-                </span>
-              </div>
-              <div className="text-center">
-                <div className="w-8 h-8 flex items-center justify-center mx-auto mb-2">
-                  <i className="ri-calendar-line text-xl"></i>
-                </div>
-                <span className="text-sm font-medium">
-                  {language === 'fr' ? 'Réservation à l’avance' : 'Advance booking'}
-                </span>
-              </div>
-            </div>
-            <button className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-full font-bold transition-colors duration-300 whitespace-nowrap cursor-pointer">
-              {language === 'fr' ? 'Demander une salle privée' : 'Inquire About Private Dining'}
-            </button>
-          </div>
+        <div className="text-center px-4">
+  <div className="bg-white rounded-2xl shadow-lg p-6 max-w-md mx-auto overflow-hidden">
+    <h3
+      className="text-2xl sm:text-3xl font-bold text-amber-900 mb-4"
+      style={{ fontFamily: 'var(--font-pacifico)' }}
+    >
+      {language === 'fr' ? 'Salle privée disponible' : 'Private Dining Available'}
+    </h3>
+
+    <p className="text-amber-800 mb-6 leading-relaxed break-words">
+      {language === 'fr'
+        ? "Organisez vos occasions spéciales dans notre élégante salle à manger privée. Parfaite pour les célébrations, les dîners d’affaires et les réunions intimes."
+        : 'Host your special occasions in our elegant private dining room. Perfect for celebrations, business dinners, and intimate gatherings.'}
+    </p>
+
+    <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-amber-700 mb-6">
+      <div className="text-center min-w-[110px]">
+        <div className="w-8 h-8 flex items-center justify-center mx-auto mb-2">
+          <i className="ri-group-line text-2xl" aria-hidden="true"></i>
         </div>
+        <span className="text-sm font-medium block">
+          {language === 'fr' ? 'Jusqu’à 20 convives' : 'Up to 20 guests'}
+        </span>
+      </div>
+
+      <div className="text-center min-w-[110px]">
+        <div className="w-8 h-8 flex items-center justify-center mx-auto mb-2">
+          <i className="ri-restaurant-line text-2xl" aria-hidden="true"></i>
+        </div>
+        <span className="text-sm font-medium block">
+          {language === 'fr' ? 'Menus personnalisés' : 'Custom menus'}
+        </span>
+      </div>
+
+      <div className="text-center min-w-[110px]">
+        <div className="w-8 h-8 flex items-center justify-center mx-auto mb-2">
+          <i className="ri-calendar-line text-2xl" aria-hidden="true"></i>
+        </div>
+        <span className="text-sm font-medium block">
+          {language === 'fr' ? 'Réservation à l’avance' : 'Advance booking'}
+        </span>
+      </div>
+    </div>
+
+    <div className="flex justify-center">
+      <button
+        className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-full font-bold transition-colors duration-300 w-full sm:w-auto max-w-xs"
+        type="button"
+      >
+        {language === 'fr' ? 'Demander une salle privée' : 'Inquire About Private Dining'}
+      </button>
+    </div>
+  </div>
+</div>
+
       </div>
     </section>
   );

@@ -14,7 +14,8 @@ export default function Footer() {
             <div>
               <div className="mb-4">
                 <img 
-                  src="https://static.readdy.ai/image/d8d2cb7f50a8dd49f4a2ee558dead2a7/b61ee4a13a9d6045fa7fc64f195e7bcb.png" 
+                  // src="https://static.readdy.ai/image/d8d2cb7f50a8dd49f4a2ee558dead2a7/b61ee4a13a9d6045fa7fc64f195e7bcb.png" 
+                  src="/Logo.jpg"
                   alt="Royal Star Cafe Logo" 
                   className="h-16 w-auto"
                 />

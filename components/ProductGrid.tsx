@@ -101,7 +101,7 @@ export default function ProductGrid() {
                   View Full Menu
                 </button>
               </Link>
-              <Link href="/contact">
+              <Link href="/reservation">
                 <button className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-full font-bold transition-colors duration-300 whitespace-nowrap cursor-pointer">
                   Make Reservation
                 </button>
