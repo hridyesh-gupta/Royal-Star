@@ -123,7 +123,7 @@ export default function Header() {
               <Link href="/contact" className="text-amber-900 hover:text-orange-500 font-medium transition-colors cursor-pointer">
                 {language === 'fr' ? 'Contact' : 'Contact'}
               </Link>
-              <Link href="/cart" className="text-amber-900 hover:text-orange-500 font-medium transition-colors cursor-pointer flex items-center gap-2">
+              <Link href="/cart" className="text-brand-charcoal hover:text-brand-red font-medium transition-colors cursor-pointer flex items-center gap-2">
                 <i className="ri-shopping-cart-line"></i>
                 {language === 'fr' ? 'Panier' : 'Cart'}
               </Link>
