@@ -65,12 +65,12 @@ export default function CheckoutForm() {
 
   if (showSuccess) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-red-50 to-red-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-xl p-8 text-center max-w-md w-full">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <i className="ri-check-line text-2xl text-green-600"></i>
           </div>
-          <h2 className="text-2xl font-bold text-amber-900 mb-2">
+          <h2 className="text-2xl font-bold text-red-900 mb-2">
             {language === 'fr' ? 'Commande confirmée !' : 'Order Confirmed!'}
           </h2>
           <p className="text-gray-600 mb-6">
@@ -80,7 +80,7 @@ export default function CheckoutForm() {
           </p>
           <button
             onClick={() => window.location.href = '/'}
-            className="bg-amber-900 hover:bg-amber-800 text-white px-6 py-3 rounded-full font-medium transition-colors whitespace-nowrap"
+            className="bg-red-900 hover:bg-red-800 text-white px-6 py-3 rounded-full font-medium transition-colors whitespace-nowrap"
           >
             {language === 'fr' ? 'Retour à l’accueil' : 'Back to Home'}
           </button>
@@ -90,18 +90,12 @@ export default function CheckoutForm() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50 pt-24 pb-12">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <h1 className="text-3xl font-bold text-amber-900 mb-8 text-center">
-          {language === 'fr' ? 'Paiement' : 'Checkout'}
-        </h1>
-        
-        <form onSubmit={handleSubmit} className="grid lg:grid-cols-3 gap-8">
+    <form onSubmit={handleSubmit} className="grid lg:grid-cols-3 gap-8">
           {/* Left Column - Form */}
           <div className="lg:col-span-2 space-y-6">
             {/* Delivery Method */}
             <div className="bg-white rounded-xl shadow-lg p-6">
-              <h2 className="text-xl font-semibold text-amber-900 mb-4">
+              <h2 className="text-xl font-semibold text-red-900 mb-4">
                 {language === 'fr' ? 'Mode de livraison' : 'Delivery Method'}
               </h2>
               <div className="grid grid-cols-2 gap-3">
@@ -115,8 +109,8 @@ export default function CheckoutForm() {
                     onClick={() => setDeliveryMethod(method.value)}
                     className={`p-4 rounded-lg border-2 transition-all text-center ${
                       deliveryMethod === method.value
-                        ? 'border-orange-500 bg-orange-50 text-orange-700'
-                        : 'border-gray-200 hover:border-amber-300 text-gray-600'
+                        ? 'border-red-500 bg-red-50 text-red-700'
+                        : 'border-gray-200 hover:border-red-300 text-gray-600'
                     }`}
                   >
                     <div className="w-8 h-8 flex items-center justify-center mx-auto mb-2">
@@ -130,7 +124,7 @@ export default function CheckoutForm() {
 
             {/* Customer Information */}
             <div className="bg-white rounded-xl shadow-lg p-6">
-              <h2 className="text-xl font-semibold text-amber-900 mb-4">
+              <h2 className="text-xl font-semibold text-red-900 mb-4">
                 {language === 'fr' ? 'Informations client' : 'Customer Information'}
               </h2>
               <div className="grid md:grid-cols-2 gap-4 mb-4">
@@ -143,7 +137,7 @@ export default function CheckoutForm() {
                     required
                     value={customerInfo.fullName}
                     onChange={(e) => setCustomerInfo({...customerInfo, fullName: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
                     placeholder={language === 'fr' ? 'Entrez votre nom complet' : 'Enter your full name'}
                   />
                 </div>
@@ -156,7 +150,7 @@ export default function CheckoutForm() {
                     required
                     value={customerInfo.email}
                     onChange={(e) => setCustomerInfo({...customerInfo, email: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
                     placeholder={language === 'fr' ? 'Entrez votre e-mail' : 'Enter your email'}
                   />
                 </div>
@@ -170,7 +164,7 @@ export default function CheckoutForm() {
                   required
                   value={customerInfo.phone}
                   onChange={(e) => setCustomerInfo({...customerInfo, phone: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
                   placeholder="+41 XX XXX XX XX"
                 />
               </div>
@@ -179,7 +173,7 @@ export default function CheckoutForm() {
             {/* Delivery Address */}
             {deliveryMethod === 'delivery' && (
               <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-xl font-semibold text-amber-900 mb-4">Delivery Address</h2>
+                <h2 className="text-xl font-semibold text-red-900 mb-4">Delivery Address</h2>
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -190,7 +184,7 @@ export default function CheckoutForm() {
                       required
                       value={address.street}
                       onChange={(e) => setAddress({...address, street: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
                       placeholder={language === 'fr' ? 'Entrez votre adresse' : 'Enter street address'}
                     />
                   </div>
@@ -204,7 +198,7 @@ export default function CheckoutForm() {
                         required
                         value={address.city}
                         onChange={(e) => setAddress({...address, city: e.target.value})}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
                         placeholder={language === 'fr' ? 'Entrez votre ville' : 'Enter city'}
                       />
                     </div>
@@ -217,7 +211,7 @@ export default function CheckoutForm() {
                         required
                         value={address.postalCode}
                         onChange={(e) => setAddress({...address, postalCode: e.target.value})}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
                         placeholder={language === 'fr' ? 'Entrez votre code postal' : 'Enter postal code'}
                       />
                     </div>
@@ -228,18 +222,18 @@ export default function CheckoutForm() {
 
             {/* Payment Method */}
             <div className="bg-white rounded-xl shadow-lg p-6">
-              <h2 className="text-xl font-semibold text-amber-900 mb-4">
+              <h2 className="text-xl font-semibold text-red-900 mb-4">
                 {language === 'fr' ? 'Mode de paiement' : 'Payment Method'}
               </h2>
               <div className="space-y-3">
-                <label className="flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all hover:border-amber-300">
+                <label className="flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all hover:border-red-300">
                   <input
                     type="radio"
                     name="payment"
                     value="stripe"
                     checked={paymentMethod === 'stripe'}
                     onChange={(e) => setPaymentMethod(e.target.value)}
-                    className="text-orange-500 focus:ring-orange-500"
+                    className="text-red-500 focus:ring-red-500"
                   />
                   <div className="ml-3 flex items-center">
                     <div className="w-8 h-8 flex items-center justify-center mr-3">
@@ -256,14 +250,14 @@ export default function CheckoutForm() {
                   </div>
                 </label>
                 
-                <label className="flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all hover:border-amber-300">
+                <label className="flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all hover:border-red-300">
                   <input
                     type="radio"
                     name="payment"
                     value="cod"
                     checked={paymentMethod === 'cod'}
                     onChange={(e) => setPaymentMethod(e.target.value)}
-                    className="text-orange-500 focus:ring-orange-500"
+                    className="text-red-500 focus:ring-red-500"
                   />
                   <div className="ml-3 flex items-center">
                     <div className="w-8 h-8 flex items-center justify-center mr-3">
@@ -284,7 +278,7 @@ export default function CheckoutForm() {
 
             {/* Special Instructions */}
             <div className="bg-white rounded-xl shadow-lg p-6">
-              <h2 className="text-xl font-semibold text-amber-900 mb-4">
+              <h2 className="text-xl font-semibold text-red-900 mb-4">
                 {language === 'fr' ? 'Instructions spéciales' : 'Special Instructions'}
               </h2>
               <div>
@@ -295,7 +289,7 @@ export default function CheckoutForm() {
                       setSpecialInstructions(e.target.value);
                     }
                   }}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
                   rows={4}
                   placeholder={language === 'fr' ? 'Des instructions spéciales pour votre commande...' : 'Any special instructions for your order...'}
                 />
@@ -309,7 +303,7 @@ export default function CheckoutForm() {
           {/* Right Column - Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-lg p-6 sticky top-24">
-              <h2 className="text-xl font-semibold text-amber-900 mb-4">
+              <h2 className="text-xl font-semibold text-red-900 mb-4">
                 {language === 'fr' ? 'Résumé de la commande' : 'Order Summary'}
               </h2>
               
@@ -331,7 +325,7 @@ export default function CheckoutForm() {
                           <h3 className="font-medium text-gray-900 text-sm">{item.name}</h3>
                           <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
                         </div>
-                        <div className="text-sm font-medium text-amber-900">
+                        <div className="text-sm font-medium text-red-900">
                           CHF {(parseFloat(item.price.replace('CHF ', '')) * item.quantity).toFixed(2)}
                         </div>
                       </div>
@@ -351,7 +345,7 @@ export default function CheckoutForm() {
                     )}
                     <div className="flex justify-between font-semibold text-lg border-t pt-2">
                       <span>{language === 'fr' ? 'Total' : 'Total'}</span>
-                      <span className="text-amber-900">CHF {total.toFixed(2)}</span>
+                      <span className="text-red-900">CHF {total.toFixed(2)}</span>
                     </div>
                   </div>
                 </>
@@ -361,7 +355,7 @@ export default function CheckoutForm() {
                 <button
                   type="submit"
                   disabled={isLoading || cartItems.length === 0}
-                  className="w-full bg-gradient-to-r from-amber-900 to-orange-600 hover:from-amber-800 hover:to-orange-500 disabled:from-gray-400 disabled:to-gray-500 text-white py-3 px-6 rounded-full font-medium transition-all duration-300 whitespace-nowrap"
+                  className="w-full bg-gradient-to-r from-red-900 to-red-600 hover:from-red-800 hover:to-red-500 disabled:from-gray-400 disabled:to-gray-500 text-white py-3 px-6 rounded-full font-medium transition-all duration-300 whitespace-nowrap"
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center">
@@ -386,7 +380,5 @@ export default function CheckoutForm() {
             </div>
           </div>
         </form>
-      </div>
-    </div>
   );
 }

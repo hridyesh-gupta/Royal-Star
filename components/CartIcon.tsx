@@ -27,7 +27,7 @@ export default function CartIcon() {
         <i className="ri-shopping-cart-line text-2xl"></i>
       </div>
       {itemCount > 0 && (
-        <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
           {itemCount}
         </span>
       )}

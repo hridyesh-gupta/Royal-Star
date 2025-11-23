@@ -6,10 +6,10 @@ import { useLanguage } from '../../components/LanguageProvider';
 export default function ContactInfo() {
   const { language } = useLanguage();
   return (
-    <section className="py-20 bg-amber-50">
+    <section className="py-20 bg-gradient-to-br from-red-50 to-red-50">
       <div className="max-w-7xl mx-auto px-8">
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-4 text-amber-900" style={{ fontFamily: 'var(--font-pacifico)' }}>
+          <h2 className="text-5xl font-bold mb-4 text-brand-charcoal" style={{ fontFamily: 'var(--font-pacifico)' }}>
             {language === 'fr' ? 'Visitez le restaurant Royal Star' : 'Visit Royal Star Restaurant'}
           </h2>
           <p className="text-xl text-gray-600">
@@ -21,93 +21,104 @@ export default function ContactInfo() {
 
         <div className="grid md:grid-cols-3 gap-8 mb-16">
           <div className="bg-white rounded-xl p-8 shadow-lg text-center">
-            <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="w-16 h-16 bg-brand-red rounded-full flex items-center justify-center mx-auto mb-6">
               <i className="ri-map-pin-line text-white text-2xl"></i>
             </div>
-            <h3 className="text-2xl font-bold text-amber-900 mb-4">
+            <h3 className="text-2xl font-bold text-brand-charcoal mb-4">
               {language === 'fr' ? 'Adresse' : 'Location'}
             </h3>
             <p className="text-gray-600 mb-2">16, Promenade des Champs-Fréchets</p>
             <p className="text-gray-600 mb-4">1217 Meyrin, Switzerland</p>
-            <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 whitespace-nowrap cursor-pointer">
-              {language === 'fr' ? 'Itinéraire' : 'Get Directions'}
-            </button>
+            <a 
+              href="https://maps.app.goo.gl/84RrmAh3hDdGmtCt6"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-brand-red hover:bg-brand-red-dark text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 whitespace-nowrap cursor-pointer inline-block w-full text-center"
+            >
+                {language === 'fr' ? 'Itinéraire' : 'Get Directions'}
+              </a>
           </div>
 
           <div className="bg-white rounded-xl p-8 shadow-lg text-center">
-            <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="w-16 h-16 bg-brand-red rounded-full flex items-center justify-center mx-auto mb-6">
               <i className="ri-phone-line text-white text-2xl"></i>
             </div>
-            <h3 className="text-2xl font-bold text-amber-900 mb-4">
+            <h3 className="text-2xl font-bold text-brand-charcoal mb-4">
               {language === 'fr' ? 'Téléphone' : 'Phone'}
             </h3>
             <p className="text-gray-600 mb-2">+41 22 525 88 11</p>
             <p className="text-gray-600 mb-4">077 938 51 69 / 077 998 07 46</p>
-            <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 whitespace-nowrap cursor-pointer">
+            <a
+              href="tel:+41 22 525 88 11"
+              className="bg-brand-red hover:bg-brand-red-dark text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 whitespace-nowrap cursor-pointer inline-block w-full text-center"
+            >
               {language === 'fr' ? 'Appeler' : 'Call Now'}
-            </button>
+            </a>
           </div>
 
           <div className="bg-white rounded-xl p-8 shadow-lg text-center">
-            <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="w-16 h-16 bg-brand-red rounded-full flex items-center justify-center mx-auto mb-6">
               <i className="ri-mail-line text-white text-2xl"></i>
             </div>
-            <h3 className="text-2xl font-bold text-amber-900 mb-4">
+            <h3 className="text-2xl font-bold text-brand-charcoal mb-4">
               {language === 'fr' ? 'E-mail' : 'Email'}
             </h3>
             <p className="text-gray-600 mb-4">royal.star.geneve@gmail.com</p>
             <p className="text-gray-600 mb-4">
               {language === 'fr' ? 'Nous répondons sous 12 heures' : 'We reply within 12 hours'}
             </p>
-            <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 whitespace-nowrap cursor-pointer">
+            <a 
+              href="mailto:royal.star.geneve@gmail.com"
+              className="bg-brand-red hover:bg-brand-red-dark text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 whitespace-nowrap cursor-pointer inline-block w-full text-center"
+            >
               {language === 'fr' ? 'Envoyer un e-mail' : 'Send Email'}
-            </button>
+            </a>
           </div>
         </div>
-
+{/* 
         <div className="bg-white rounded-xl p-8 shadow-lg">
-          <h3 className="text-3xl font-bold text-amber-900 mb-6 text-center">
-            {language === 'fr' ? 'Horaires d’ouverture' : 'Opening Hours'}
-          </h3>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <h4 className="text-xl font-semibold text-amber-900 mb-4">
-                {language === 'fr' ? 'Horaires quotidiens' : 'Daily Schedule'}
+              <h4 className="text-xl font-semibold text-red-900 mb-4">
+                {language === 'fr' ? 'Horaires quotidiens (Horaires d’ouverture)' : 'Daily Schedule (Opening Hours)'}
               </h4>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">
-                    {language === 'fr' ? 'Lundi - Dimanche' : 'Monday - Sunday'}
-                  </span>
-                  <span className="font-medium text-amber-900">7:00 AM - 8:00 PM</span>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: language === 'fr'
+                        ? 'Sam 08h00 - 00h00<br />Dim 08h00 - 22h30<br />Lun 07h30 - 22h00<br />Mar 07h30 - 22h00<br />Mer 07h30 - 22h00<br />Jeu 07h30 - 23h00<br />Ven 07h30 - 00h00'
+                        : 'Sat 8:00 AM - 12:00 AM<br />Sun 8:00 AM - 10:30 PM<br />Mon 7:30 AM - 10:00 PM<br />Tue 7:30 AM - 10:00 PM<br />Wed 7:30 AM - 10:00 PM<br />Thu 7:30 AM - 11:00 PM<br />Fri 7:30 AM - 12:00 AM'
+                    }}
+                  />
                 </div>
               </div>
             </div>
             <div>
-              <h4 className="text-xl font-semibold text-amber-900 mb-4">
+              <h4 className="text-xl font-semibold text-red-900 mb-4">
                 {language === 'fr' ? 'Atouts du restaurant' : 'Restaurant Features'}
               </h4>
               <div className="space-y-3">
                 <div className="flex items-center">
-                  <i className="ri-check-line text-orange-500 mr-3"></i>
+                  <i className="ri-check-line text-brand-red mr-3"></i>
                   <span className="text-gray-600">
                     {language === 'fr' ? 'Cuisine indienne authentique' : 'Authentic Indian Cuisine'}
                   </span>
                 </div>
                 <div className="flex items-center">
-                  <i className="ri-check-line text-orange-500 mr-3"></i>
+                  <i className="ri-check-line text-red-500 mr-3"></i>
                   <span className="text-gray-600">
                     {language === 'fr' ? 'Hospitalité suisse' : 'Swiss Hospitality'}
                   </span>
                 </div>
                 <div className="flex items-center">
-                  <i className="ri-check-line text-orange-500 mr-3"></i>
+                  <i className="ri-check-line text-red-500 mr-3"></i>
                   <span className="text-gray-600">
                     {language === 'fr' ? 'Sélection de vins premium' : 'Premium Wine Collection'}
                   </span>
                 </div>
                 <div className="flex items-center">
-                  <i className="ri-check-line text-orange-500 mr-3"></i>
+                  <i className="ri-check-line text-red-500 mr-3"></i>
                   <span className="text-gray-600">
                     {language === 'fr' ? 'Ambiance familiale' : 'Family Dining Experience'}
                   </span>
@@ -115,7 +126,7 @@ export default function ContactInfo() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="mt-16 bg-white rounded-xl shadow-lg overflow-hidden">
           <iframe

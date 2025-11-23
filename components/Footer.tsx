@@ -6,7 +6,7 @@ import { useLanguage } from './LanguageProvider';
 export default function Footer() {
   const { language } = useLanguage();
   return (
-    <footer className="bg-amber-900 text-white">      
+    <footer className="bg-brand-red-dark text-white">      
       {/* Main Footer */}
       <div className="py-16 px-8">
         <div className="max-w-7xl mx-auto">
@@ -26,37 +26,37 @@ export default function Footer() {
                   : 'Discover Swiss hospitality and an exceptional restaurant in the heart of Geneva\'s Meyrin district. Where traditional Swiss charm meets the culture of Indian cuisine.'}
               </p>
               <div className="flex space-x-4">
-                <a href="#" className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center hover:bg-orange-600 transition-colors cursor-pointer">
+                <a href="#" className="w-10 h-10 bg-brand-red rounded-full flex items-center justify-center hover:bg-brand-red-dark transition-colors cursor-pointer">
                   <i className="ri-facebook-fill text-white"></i>
                 </a>
-                <a href="#" className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center hover:bg-orange-600 transition-colors cursor-pointer">
+                <a href="#" className="w-10 h-10 bg-brand-red rounded-full flex items-center justify-center hover:bg-brand-red-dark transition-colors cursor-pointer">
                   <i className="ri-instagram-line text-white"></i>
                 </a>
-                <a href="#" className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center hover:bg-orange-600 transition-colors cursor-pointer">
+                <a href="#" className="w-10 h-10 bg-brand-red rounded-full flex items-center justify-center hover:bg-brand-red-dark transition-colors cursor-pointer">
                   <i className="ri-twitter-fill text-white"></i>
                 </a>
               </div>
             </div>
 
             <div>
-              <h4 className="text-xl font-bold mb-4 text-orange-400">
+              <h4 className="text-xl font-bold mb-4 text-brand-white">
                 {language === 'fr' ? 'Informations de contact' : 'Contact Info'}
               </h4>
               <div className="space-y-3">
                 <div className="flex items-center text-white/80">
-                  <i className="ri-map-pin-line mr-3 text-orange-400"></i>
+                  <i className="ri-map-pin-line mr-3 text-brand-red"></i>
                   <span>16, Promenade des Champs-Fréchets, 1217 Meyrin</span>
                 </div>
                 <div className="flex items-center text-white/80">
-                  <i className="ri-phone-line mr-3 text-orange-400"></i>
+                  <i className="ri-phone-line mr-3 text-brand-red"></i>
                   <span>+41 22 525 88 11 / 077 938 51 69 / 077 998 07 46</span>
                 </div>
                 <div className="flex items-center text-white/80">
-                  <i className="ri-mail-line mr-3 text-orange-400"></i>
+                  <i className="ri-mail-line mr-3 text-brand-red"></i>
                   <span>royal.star.geneve@gmail.com</span>
                 </div>
                 <div className="flex items-center text-white/80">
-                  <i className="ri-time-line mr-3 text-orange-400"></i>
+                  <i className="ri-time-line mr-3 text-brand-red"></i>
                   <span
                     dangerouslySetInnerHTML={{
                       __html: language === 'fr'
@@ -72,7 +72,7 @@ export default function Footer() {
           <hr className="border-white/20 my-8" />
           <div className="flex flex-col md:flex-row justify-between items-center">
              <span className="text-white-400 text-sm">
-                {language === 'fr' ? 'Développé et maintenu avec ❤️ par' : 'Developed and maintained with ❤️ by'} <strong><a href="https://ai.hridx.tech/" className="text-orange-400 underline underline-offset-4">HridxAI</a></strong>...
+                {language === 'fr' ? 'Développé et maintenu avec ❤️ par' : 'Developed and maintained with ❤️ by'} <strong><a href="https://ai.hridx.tech/" className="text-amber-400 underline underline-offset-4">HridxAI</a></strong>...
               </span>
               <br />
             <p className="text-white/60 text-sm">
@@ -81,13 +81,13 @@ export default function Footer() {
                 : '2024 Royal Star Cafe. All rights reserved.'}
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-white/60 hover:text-orange-400 text-sm transition-colors cursor-pointer">
+              <a href="#" className="text-white/60 hover:text-brand-red text-sm transition-colors cursor-pointer">
                 {language === 'fr' ? 'Politique de confidentialité' : 'Privacy Policy'}
               </a>
-              <a href="#" className="text-white/60 hover:text-orange-400 text-sm transition-colors cursor-pointer">
+              <a href="#" className="text-white/60 hover:text-brand-red text-sm transition-colors cursor-pointer">
                 {language === 'fr' ? 'Conditions d’utilisation' : 'Terms of Service'}
               </a>
-              {/* <a href="#" className="text-white/60 hover:text-orange-400 text-sm transition-colors cursor-pointer">
+              {/* <a href="#" className="text-white/60 hover:text-red-400 text-sm transition-colors cursor-pointer">
                 {language === 'fr' ? 'Politique de cookies' : 'Cookie Policy'}
               </a> */}
             </div>

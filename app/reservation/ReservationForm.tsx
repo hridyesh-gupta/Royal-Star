@@ -54,12 +54,12 @@ export default function ReservationForm() {
       <div className="max-w-3xl mx-auto px-6">
         <div className="mb-8 text-center">
           <h1
-            className="text-4xl md:text-5xl font-bold text-amber-900 mb-3"
+            className="text-5xl font-bold mb-4 text-red-900"
             style={{ fontFamily: 'var(--font-pacifico)' }}
           >
             {language === 'fr' ? 'Réserver une table' : 'Reserve a Table'}
           </h1>
-          <p className="text-gray-600 text-base md:text-lg">
+          <p className="text-xl text-red-800 max-w-3xl mx-auto">
             {language === 'fr'
               ? 'Choisissez la date, l\'heure et le nombre de convives pour votre prochaine expérience au Royal Star.'
               : 'Select your preferred date, time, and party size for your next Royal Star experience.'}
@@ -70,7 +70,7 @@ export default function ReservationForm() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-amber-900 mb-2">
+                <label className="block text-sm font-medium text-red-900 mb-2">
                   {language === 'fr' ? 'Date *' : 'Date *'}
                 </label>
                 <input
@@ -84,7 +84,7 @@ export default function ReservationForm() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-amber-900 mb-2">
+                <label className="block text-sm font-medium text-red-900 mb-2">
                   {language === 'fr' ? 'Heure *' : 'Time *'}
                 </label>
                 <input
@@ -99,7 +99,7 @@ export default function ReservationForm() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-amber-900 mb-2">
+              <label className="block text-sm font-medium text-red-900 mb-2">
                 {language === 'fr' ? 'Nom *' : 'Name *'}
               </label>
               <input
@@ -114,7 +114,7 @@ export default function ReservationForm() {
 
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-amber-900 mb-2">
+                <label className="block text-sm font-medium text-red-900 mb-2">
                   {language === 'fr' ? 'E-mail *' : 'Email *'}
                 </label>
                 <input
@@ -128,7 +128,7 @@ export default function ReservationForm() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-amber-900 mb-2">
+                <label className="block text-sm font-medium text-red-900 mb-2">
                   {language === 'fr' ? 'Téléphone *' : 'Phone *'}
                 </label>
                 <input
@@ -143,7 +143,7 @@ export default function ReservationForm() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-amber-900 mb-2">
+              <label className="block text-sm font-medium text-red-900 mb-2">
                 {language === 'fr' ? 'Nombre de convives *' : 'Number of Guests *'}
               </label>
               <select
@@ -164,7 +164,7 @@ export default function ReservationForm() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-amber-900 mb-2">
+              <label className="block text-sm font-medium text-red-900 mb-2">
                 {language === 'fr'
                   ? 'Demandes particulières (max. 500 caractères)'
                   : 'Special Requests (Max 500 characters)'}
@@ -207,7 +207,7 @@ export default function ReservationForm() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="min-w-[180px] bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-8 rounded-full transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed whitespace-nowrap cursor-pointer"
+                className="min-w-[180px] bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-8 rounded-full transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed whitespace-nowrap cursor-pointer"
               >
                 {isSubmitting
                   ? language === 'fr'

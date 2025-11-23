@@ -11,7 +11,7 @@ export default function CartPage() {
     <div className="min-h-screen">
       <Header />
       <CartHero />
-      <section className="bg-gradient-to-br from-amber-50 to-orange-50 min-h-screen">
+      <section className="bg-gradient-to-br from-red-50 to-red-50 min-h-screen">
         <CartItems />
       </section>
       <Footer />

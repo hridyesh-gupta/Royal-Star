@@ -379,15 +379,15 @@ export default function MenuSection() {
       "items": [
         { "name": "Coca Cola (Classic, Zero)", "frname": "Coca cola classic, zero", "description": "", "frdescription": "", "price": "CHF 3.50" },
         { "name": "Sinalco", "frname": "Sinalco", "description": "", "frdescription": "", "price": "CHF 3.50" },
-        { "name": "Fanta (Orange, Mango)", "frname": "Fanta orange, mangue", "description": "", "frdescription": "", "price": "CHF 3.50" },
+        { "name": "Fanta (red, Mango)", "frname": "Fanta red, mangue", "description": "", "frdescription": "", "price": "CHF 3.50" },
         { "name": "Sprite", "frname": "Sprite", "description": "", "frdescription": "", "price": "CHF 3.50" },
         { "name": "Sparkling Water", "frname": "Eau gazeuse (Sanpellegrino)", "description": "", "frdescription": "", "price": "CHF 3.50" },
         { "name": "Mineral Water (Evian)", "frname": "Eau minérale (Evian)", "description": "", "frdescription": "", "price": "CHF 3.50" },
         { "name": "Iced Tea Lemon Peach", "frname": "Thé froid, citron, pêche", "description": "", "frdescription": "", "price": "CHF 3.50" },
         { "name": "Schweppes Tonic Lemon", "frname": "Schweppes tonic, lemon", "description": "", "frdescription": "", "price": "CHF 3.50" },
         { 
-          "name": "Orange Juice, Pineapple Juice, Peach Juice)", 
-          "frname": "Jus d’orange, jus d’ananas, jus de pêche", 
+          "name": "red Juice, Pineapple Juice, Peach Juice)", 
+          "frname": "Jus d’red, jus d’ananas, jus de pêche", 
           "description": "Fruit Juice 20 cl", 
           "frdescription": "Jus et nectars de fruits 20 cl", 
           "price": "CHF 3.50" 
@@ -600,8 +600,8 @@ export default function MenuSection() {
         {
           "name": "Spritz",
           "frname": "Spritz",
-          "description": "6 cl prosecco, 4 cl aperol, 2 cl sparkling water, ice and slice of orange",
-          "frdescription": "6 cl prosecco, 4 cl aperol, 2 cl eau gazeuse, glaçons et tranche d’orange",
+          "description": "6 cl prosecco, 4 cl aperol, 2 cl sparkling water, ice and slice of red",
+          "frdescription": "6 cl prosecco, 4 cl aperol, 2 cl eau gazeuse, glaçons et tranche d’red",
           "price": "CHF 10.00"
         },
         {
@@ -614,15 +614,15 @@ export default function MenuSection() {
         {
           "name": "Tequila Sunrise",
           "frname": "Tequila Sunrise",
-          "description": "6 cl tequila, 12 cl orange juice, 2 cl grenadine, slice of orange",
-          "frdescription": "6 cl tequila, 12 cl jus d’orange, 2 cl grenadine et tranche d’orange",
+          "description": "6 cl tequila, 12 cl red juice, 2 cl grenadine, slice of red",
+          "frdescription": "6 cl tequila, 12 cl jus d’red, 2 cl grenadine et tranche d’red",
           "price": "CHF 12.00"
         },
         {
           "name": "Negroni",
           "frname": "Negroni",
-          "description": "3 cl gin, 3 cl campari, 3 cl red vermouth, ice and orange zest",
-          "frdescription": "3 cl gin, 3 cl campari, 3 cl vermouth rouge, glaçons et zeste d’orange",
+          "description": "3 cl gin, 3 cl campari, 3 cl red vermouth, ice and red zest",
+          "frdescription": "3 cl gin, 3 cl campari, 3 cl vermouth rouge, glaçons et zeste d’red",
           "price": "CHF 10.00"
         },
         {
@@ -671,8 +671,8 @@ export default function MenuSection() {
         {
           "name": "Bora Bora (non alcoholic)",
           "frname": "Bora Bora",
-          "description": "Pineapple juice, passion fruit, grenadine, ice and orange slice",
-          "frdescription": "Jus ananas et fruit passion, grenadine, glaçons et tranche d’orange",
+          "description": "Pineapple juice, passion fruit, grenadine, ice and red slice",
+          "frdescription": "Jus ananas et fruit passion, grenadine, glaçons et tranche d’red",
           "price": "CHF 9.00"
         }
       ]
@@ -753,19 +753,19 @@ export default function MenuSection() {
         className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 border-b pb-2 last:border-b-0 last:pb-0"
       >
         <div className="flex-1">
-          <p className="font-semibold text-amber-900">{displayName}</p>
+          <p className="font-semibold text-red-900">{displayName}</p>
           {displayDescription && <p className="text-sm text-gray-600">{displayDescription}</p>}
         </div>
         <div className="flex items-center gap-3 flex-wrap justify-end">
           {!hasVariants && item.price && (
             <>
-              <p className="font-medium text-amber-800 whitespace-nowrap">{item.price}</p>
+              <p className="font-medium text-red-800 whitespace-nowrap">{item.price}</p>
               <button
                 onClick={() => handleAddToCart(item, categoryTitle)}
                 className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap cursor-pointer ${
                   isAdded
                     ? 'bg-green-500 text-white'
-                    : 'bg-orange-500 hover:bg-orange-600 text-white'
+                    : 'bg-red-500 hover:bg-red-600 text-white'
                 }`}
               >
                 {isAdded ? (
@@ -787,7 +787,7 @@ export default function MenuSection() {
             <>
               {item.price_bottle && (
                 <div className="flex items-center gap-2">
-                  <p className="font-medium text-amber-800 whitespace-nowrap">
+                  <p className="font-medium text-red-800 whitespace-nowrap">
                     {item.price_bottle} {language === 'fr' ? '(Bouteille)' : '(Bottle)'}
                   </p>
                   <button
@@ -795,7 +795,7 @@ export default function MenuSection() {
                     className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap cursor-pointer ${
                       isBottleAdded
                         ? 'bg-green-500 text-white'
-                        : 'bg-orange-500 hover:bg-orange-600 text-white'
+                        : 'bg-red-500 hover:bg-red-600 text-white'
                     }`}
                   >
                     {isBottleAdded ? (
@@ -815,7 +815,7 @@ export default function MenuSection() {
 
               {item.price_glass && (
                 <div className="flex items-center gap-2">
-                  <p className="font-medium text-amber-800 whitespace-nowrap">
+                  <p className="font-medium text-red-800 whitespace-nowrap">
                     {item.price_glass} {language === 'fr' ? '(4 cl)' : '(4 cl)'}
                   </p>
                   <button
@@ -823,7 +823,7 @@ export default function MenuSection() {
                     className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap cursor-pointer ${
                       isGlassAdded
                         ? 'bg-green-500 text-white'
-                        : 'bg-orange-500 hover:bg-orange-600 text-white'
+                        : 'bg-red-500 hover:bg-red-600 text-white'
                     }`}
                   >
                     {isGlassAdded ? (
@@ -848,13 +848,13 @@ export default function MenuSection() {
   };
 
   return (
-    <section className="bg-gradient-to-br from-amber-50 to-orange-50 py-20 px-8">
+    <section className="bg-gradient-to-br from-red-50 to-red-50 py-20 px-8">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold text-amber-900 mb-6" style={{ fontFamily: 'var(--font-pacifico)' }}>
+          <h2 className="text-5xl font-bold text-red-900 mb-6" style={{ fontFamily: 'var(--font-pacifico)' }}>
             {language === 'fr' ? 'Notre carte complète' : 'Our Complete Menu'}
           </h2>
-          <p className="text-xl text-amber-800 max-w-3xl mx-auto">
+          <p className="text-xl text-red-800 max-w-3xl mx-auto">
             {language === 'fr'
               ? 'Cuisine indienne authentique avec hospitalité suisse. Ajoutez vos plats préférés au panier et profitez de nos délicieuses spécialités.'
               : 'Authentic Indian cuisine with Swiss hospitality. Add your favorite dishes to cart and enjoy our delicious offerings.'}
@@ -864,10 +864,10 @@ export default function MenuSection() {
         {/* Food Items Section */}
         <div className="mb-20">
           <div className="text-center mb-12">
-            <h3 className="text-4xl font-bold text-amber-900 mb-4" style={{ fontFamily: 'var(--font-pacifico)' }}>
+            <h3 className="text-4xl font-bold text-red-900 mb-4" style={{ fontFamily: 'var(--font-pacifico)' }}>
               {language === 'fr' ? 'Plats' : 'Food Items'}
             </h3>
-            <div className="w-24 h-1 bg-orange-500 mx-auto rounded-full"></div>
+            <div className="w-24 h-1 bg-red-500 mx-auto rounded-full"></div>
           </div>
 
           <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-12">
@@ -877,7 +877,7 @@ export default function MenuSection() {
 
               return (
                 <div key={idx} className="bg-white rounded-2xl shadow-lg p-8">
-                  <h4 className="text-2xl font-bold text-amber-900 mb-6 text-center" style={{ fontFamily: 'var(--font-pacifico)' }}>
+                  <h4 className="text-2xl font-bold text-red-900 mb-6 text-center" style={{ fontFamily: 'var(--font-pacifico)' }}>
                     {displayTitle}
                   </h4>
 
@@ -895,10 +895,10 @@ export default function MenuSection() {
         {/* Beverages Section */}
         <div className="mb-20">
           <div className="text-center mb-12">
-            <h3 className="text-4xl font-bold text-amber-900 mb-4" style={{ fontFamily: 'var(--font-pacifico)' }}>
+            <h3 className="text-4xl font-bold text-red-900 mb-4" style={{ fontFamily: 'var(--font-pacifico)' }}>
               {language === 'fr' ? 'Boissons & Spiritueux' : 'Beverages & Spirits'}
             </h3>
-            <div className="w-24 h-1 bg-orange-500 mx-auto rounded-full"></div>
+            <div className="w-24 h-1 bg-red-500 mx-auto rounded-full"></div>
           </div>
 
           <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-12">
@@ -908,7 +908,7 @@ export default function MenuSection() {
 
               return (
                 <div key={idx} className="bg-white rounded-2xl shadow-lg p-8">
-                  <h4 className="text-2xl font-bold text-amber-900 mb-6 text-center" style={{ fontFamily: 'var(--font-pacifico)' }}>
+                  <h4 className="text-2xl font-bold text-red-900 mb-6 text-center" style={{ fontFamily: 'var(--font-pacifico)' }}>
                     {displayTitle}
                   </h4>
 
@@ -926,10 +926,10 @@ export default function MenuSection() {
         {/* Wines Section */}
         <div>
           <div className="text-center mb-12">
-            <h3 className="text-4xl font-bold text-amber-900 mb-4" style={{ fontFamily: 'var(--font-pacifico)' }}>
+            <h3 className="text-4xl font-bold text-red-900 mb-4" style={{ fontFamily: 'var(--font-pacifico)' }}>
               {language === 'fr' ? 'Sélection de vins premium' : 'Premium Wine Collection'}
             </h3>
-            <div className="w-24 h-1 bg-orange-500 mx-auto rounded-full"></div>
+            <div className="w-24 h-1 bg-red-500 mx-auto rounded-full"></div>
           </div>
 
           <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-12">
@@ -939,7 +939,7 @@ export default function MenuSection() {
 
               return (
                 <div key={idx} className="bg-white rounded-2xl shadow-lg p-8">
-                  <h4 className="text-2xl font-bold text-amber-900 mb-6 text-center" style={{ fontFamily: 'var(--font-pacifico)' }}>
+                  <h4 className="text-2xl font-bold text-red-900 mb-6 text-center" style={{ fontFamily: 'var(--font-pacifico)' }}>
                     {displayTitle}
                   </h4>
 

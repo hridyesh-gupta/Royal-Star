@@ -50,7 +50,7 @@ export default function ContactForm() {
     <section className="py-20 bg-white">
       <div className="max-w-4xl mx-auto px-8">
         <div className="text-center mb-12">
-          <h2 className="text-5xl font-bold mb-4 text-amber-900" style={{ fontFamily: 'var(--font-pacifico)' }}>
+          <h2 className="text-5xl font-bold mb-4 text-brand-charcoal" style={{ fontFamily: 'var(--font-pacifico)' }}>
             {language === 'fr' ? 'Envoyez-nous un message' : 'Send Us a Message'}
           </h2>
           <p className="text-xl text-gray-600">
@@ -60,11 +60,11 @@ export default function ContactForm() {
           </p>
         </div>
 
-        <div className="bg-amber-50 rounded-2xl p-8 shadow-lg">
+        <div className="bg-brand-cream rounded-2xl p-8 shadow-lg">
           <form id="contact-form" onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-amber-900 mb-2">
+                <label className="block text-sm font-medium text-red-900 mb-2">
                   {language === 'fr' ? 'Votre nom *' : 'Your Name *'}
                 </label>
                 <input
@@ -73,13 +73,13 @@ export default function ContactForm() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+                  className="w-full px-4 py-3 border border-brand-red-soft rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red text-sm"
                   placeholder={language === 'fr' ? 'Entrez votre nom complet' : 'Enter your full name'}
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-amber-900 mb-2">
+                <label className="block text-sm font-medium text-red-900 mb-2">
                   {language === 'fr' ? 'Adresse e-mail *' : 'Email Address *'}
                 </label>
                 <input
@@ -88,7 +88,7 @@ export default function ContactForm() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+                  className="w-full px-4 py-3 border border-red-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
                   placeholder={language === 'fr' ? 'Entrez votre e-mail' : 'Enter your email'}
                 />
               </div>
@@ -96,7 +96,7 @@ export default function ContactForm() {
 
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-amber-900 mb-2">
+                <label className="block text-sm font-medium text-red-900 mb-2">
                   {language === 'fr' ? 'Numéro de téléphone' : 'Phone Number'}
                 </label>
                 <input
@@ -104,13 +104,13 @@ export default function ContactForm() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+                  className="w-full px-4 py-3 border border-red-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
                   placeholder={language === 'fr' ? 'Ex. : +41 22 000 00 00' : '(555) 123-4567'}
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-amber-900 mb-2">
+                <label className="block text-sm font-medium text-red-900 mb-2">
                   {language === 'fr' ? 'Sujet *' : 'Subject *'}
                 </label>
                 <input
@@ -119,14 +119,14 @@ export default function ContactForm() {
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
+                  className="w-full px-4 py-3 border border-red-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
                   placeholder={language === 'fr' ? 'De quoi s’agit-il ?' : "What's this about?"}
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-amber-900 mb-2">
+              <label className="block text-sm font-medium text-red-900 mb-2">
                 {language === 'fr' ? 'Message *' : 'Message *'}
               </label>
               <textarea
@@ -136,7 +136,7 @@ export default function ContactForm() {
                 required
                 rows={6}
                 maxLength={500}
-                className="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm resize-none"
+                className="w-full px-4 py-3 border border-brand-red-soft rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-red text-sm resize-none"
                 placeholder={language === 'fr' ? 'Dites-nous en plus sur votre demande...' : 'Tell us more about your inquiry...'}
               />
               <div className="text-right text-sm text-gray-500 mt-1">
@@ -163,7 +163,7 @@ export default function ContactForm() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-8 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap cursor-pointer"
+              className="w-full bg-brand-red hover:bg-brand-red-dark text-white font-bold py-4 px-8 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap cursor-pointer"
             >
               {isSubmitting
                 ? language === 'fr' ? 'Envoi en cours...' : 'Sending...'

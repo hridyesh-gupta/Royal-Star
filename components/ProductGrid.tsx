@@ -44,13 +44,13 @@ export default function ProductGrid() {
   ];
 
   return (
-    <section className="bg-gradient-to-br from-amber-100 to-orange-100 py-20 px-8" data-product-shop>
+    <section className="bg-gradient-to-br from-red-100 to-red-100 py-20 px-8" data-product-shop>
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold text-amber-900 mb-6" style={{ fontFamily: 'var(--font-pacifico)' }}>
+          <h2 className="text-5xl font-bold text-red-900 mb-6" style={{ fontFamily: 'var(--font-pacifico)' }}>
             Dining Experiences
           </h2>
-          <p className="text-xl text-amber-800 max-w-3xl mx-auto">
+          <p className="text-xl text-red-800 max-w-3xl mx-auto">
             Discover our range of exceptional dining experiences, from intimate dinners to grand celebrations, all crafted with Swiss precision and hospitality.
           </p>
         </div>
@@ -67,17 +67,17 @@ export default function ProductGrid() {
               </div>
               
               <div className="p-6">
-                <h3 className="text-2xl font-bold text-amber-900 mb-3" style={{ fontFamily: 'var(--font-pacifico)' }}>
+                <h3 className="text-2xl font-bold text-red-900 mb-3" style={{ fontFamily: 'var(--font-pacifico)' }}>
                   {feature.title}
                 </h3>
-                <p className="text-amber-700 mb-4 leading-relaxed">
+                <p className="text-red-700 mb-4 leading-relaxed">
                   {feature.description}
                 </p>
                 <div className="flex justify-between items-center">
-                  <span className="text-xl font-bold text-orange-600">
+                  <span className="text-xl font-bold text-red-600">
                     {feature.price}
                   </span>
-                  <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full font-medium transition-colors duration-200 whitespace-nowrap cursor-pointer">
+                  <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full font-medium transition-colors duration-200 whitespace-nowrap cursor-pointer">
                     Learn More
                   </button>
                 </div>
@@ -88,21 +88,21 @@ export default function ProductGrid() {
 
         <div className="text-center">
           <div className="bg-white rounded-2xl shadow-lg p-8 max-w-3xl mx-auto">
-            <h3 className="text-3xl font-bold text-amber-900 mb-4" style={{ fontFamily: 'var(--font-pacifico)' }}>
+            <h3 className="text-3xl font-bold text-red-900 mb-4" style={{ fontFamily: 'var(--font-pacifico)' }}>
               Ready to Dine with Us?
             </h3>
-            <p className="text-amber-800 mb-6 text-lg">
+            <p className="text-red-800 mb-6 text-lg">
               Experience the finest Swiss cuisine and exceptional service at Royal Star Restaurant. 
               Reserve your table today for an unforgettable dining experience.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/menu">
-                <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-full font-bold transition-colors duration-300 whitespace-nowrap cursor-pointer">
+                <button className="bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-full font-bold transition-colors duration-300 whitespace-nowrap cursor-pointer">
                   View Full Menu
                 </button>
               </Link>
               <Link href="/reservation">
-                <button className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-full font-bold transition-colors duration-300 whitespace-nowrap cursor-pointer">
+                <button className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-full font-bold transition-colors duration-300 whitespace-nowrap cursor-pointer">
                   Make Reservation
                 </button>
               </Link>

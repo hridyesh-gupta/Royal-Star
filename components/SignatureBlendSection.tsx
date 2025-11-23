@@ -24,17 +24,17 @@ export default function SignatureBlendSection() {
     <section className="bg-white py-20 px-8">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold text-amber-900 mb-6" style={{ fontFamily: 'var(--font-pacifico)' }}>
+          <h2 className="text-5xl font-bold text-red-900 mb-6" style={{ fontFamily: 'var(--font-pacifico)' }}>
             Chef's Signature Dishes
           </h2>
-          <p className="text-xl text-amber-800 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-red-800 max-w-3xl mx-auto leading-relaxed">
             Discover our most celebrated creations, where traditional Swiss culinary heritage meets modern gastronomy. Each dish is crafted with passion and presented with Swiss precision.
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 mb-16">
           {signatureDishes.map((dish, index) => (
-            <div key={index} className="bg-amber-50 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+            <div key={index} className="bg-red-50 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
               <div className="h-48 overflow-hidden">
                 <img 
                   src={dish.image}
@@ -43,10 +43,10 @@ export default function SignatureBlendSection() {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-2xl font-bold text-amber-900 mb-3" style={{ fontFamily: 'var(--font-pacifico)' }}>
+                <h3 className="text-2xl font-bold text-red-900 mb-3" style={{ fontFamily: 'var(--font-pacifico)' }}>
                   {dish.name}
                 </h3>
-                <p className="text-amber-700 leading-relaxed">
+                <p className="text-red-700 leading-relaxed">
                   {dish.description}
                 </p>
               </div>
@@ -72,22 +72,22 @@ export default function SignatureBlendSection() {
             </p>
             <div className="grid md:grid-cols-3 gap-8 text-white">
               <div className="text-center">
-                <div className="w-16 h-16 flex items-center justify-center mx-auto mb-4 bg-orange-500/20 rounded-full">
-                  <i className="ri-leaf-line text-2xl text-orange-300"></i>
+                <div className="w-16 h-16 flex items-center justify-center mx-auto mb-4 bg-red-500/20 rounded-full">
+                  <i className="ri-leaf-line text-2xl text-red-300"></i>
                 </div>
                 <h4 className="text-xl font-bold mb-2">Farm to Table</h4>
                 <p className="text-sm text-white/80">Fresh ingredients from local Swiss farms and Lake Geneva suppliers</p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 flex items-center justify-center mx-auto mb-4 bg-orange-500/20 rounded-full">
-                  <i className="ri-fire-line text-2xl text-orange-300"></i>
+                <div className="w-16 h-16 flex items-center justify-center mx-auto mb-4 bg-red-500/20 rounded-full">
+                  <i className="ri-fire-line text-2xl text-red-300"></i>
                 </div>
                 <h4 className="text-xl font-bold mb-2">Master Crafted</h4>
                 <p className="text-sm text-white/80">Traditional techniques meet modern culinary innovation</p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 flex items-center justify-center mx-auto mb-4 bg-orange-500/20 rounded-full">
-                  <i className="ri-heart-3-line text-2xl text-orange-300"></i>
+                <div className="w-16 h-16 flex items-center justify-center mx-auto mb-4 bg-red-500/20 rounded-full">
+                  <i className="ri-heart-3-line text-2xl text-red-300"></i>
                 </div>
                 <h4 className="text-xl font-bold mb-2">Swiss Excellence</h4>
                 <p className="text-sm text-white/80">Every dish prepared and presented with genuine Swiss care</p>

@@ -13,6 +13,10 @@ export default function CartHero() {
       }}
     >
       <div className="text-center text-white px-4 sm:px-8">
+        <br />
+        <br />
+        <br />
+        <br />
         <h1 className="text-4xl sm:text-6xl font-bold mb-4 sm:mb-6" style={{ fontFamily: 'var(--font-pacifico)' }}>
           {language === 'fr' ? 'Votre panier' : 'Your Cart'}
         </h1>

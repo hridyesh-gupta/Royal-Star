@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Pacifico, Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/components/LanguageProvider";
+import FloatingCartButton from "@/components/FloatingCartButton";
 
 const pacifico = Pacifico({
   weight: "400",
@@ -38,6 +39,7 @@ export default function RootLayout({
       >
         <LanguageProvider>
           {children}
+          <FloatingCartButton />
         </LanguageProvider>
       </body>
     </html>

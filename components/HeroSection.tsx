@@ -12,7 +12,7 @@ export default function HeroSection() {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-fixed"
         style={{
-          backgroundImage: 'url("https://readdy.ai/api/search-image?query=Elegant%20fine%20dining%20restaurant%20interior%20with%20warm%20ambient%20lighting%2C%20sophisticated%20table%20settings%2C%20Swiss%20Alpine%20decor%20elements%2C%20luxurious%20dining%20atmosphere%2C%20Geneva%20lakeside%20restaurant%20ambiance%2C%20professional%20culinary%20presentation%2C%20upscale%20restaurant%20environment%20with%20mountain%20views%20in%20background&width=1920&height=1080&seq=restaurant-hero-bg&orientation=landscape")'
+          backgroundImage: 'url(/2.jpg)'
         }}
       >
         {/* Dark overlay for better text contrast */}
@@ -30,7 +30,7 @@ export default function HeroSection() {
           {/* Logo */}
           <div className="mb-8">
             <img 
-              src="https://static.readdy.ai/image/d8d2cb7f50a8dd49f4a2ee558dead2a7/b61ee4a13a9d6045fa7fc64f195e7bcb.png" 
+              src="/Logo.jpg" 
               alt="Royal Star Restaurant Logo" 
               className="h-24 w-auto mx-auto drop-shadow-2xl"
             />
@@ -39,7 +39,7 @@ export default function HeroSection() {
           <h1 className="text-6xl md:text-8xl font-bold mb-6" style={{ fontFamily: 'var(--font-pacifico)' }}>
             <span className="text-white drop-shadow-2xl">Royal Star</span>
             <br />
-            <span className="text-orange-400 drop-shadow-2xl">Restaurant</span>
+            <span className="text-brand-red drop-shadow-2xl">Restaurant</span>
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-8 font-medium drop-shadow-lg">
             {language === 'fr'
@@ -48,11 +48,11 @@ export default function HeroSection() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link href="/menu">
-              <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg whitespace-nowrap cursor-pointer">
+              <button className="bg-brand-red hover:bg-brand-red-dark text-white px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg whitespace-nowrap cursor-pointer">
                 {language === 'fr' ? 'Commander maintenant' : 'Order Now'}
               </button>
             </Link>
-            <Link href="/contact">
+            <Link href="/reservation">
               <button className="bg-transparent border-2 border-white/80 hover:bg-white/10 text-white px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg whitespace-nowrap cursor-pointer">
                 {language === 'fr' ? 'Réserver votre table' : 'Reserve Your Table'}
               </button>

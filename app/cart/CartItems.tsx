@@ -47,14 +47,15 @@ export default function CartItems() {
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
             {language === 'fr' ? 'Votre panier est vide' : 'Your cart is empty'}
           </h2>
-          <p className="text-gray-600 mb-8 text-sm">
+          <p className="text-xl text-red-800 max-w-3xl mx-auto">
             {language === 'fr'
               ? 'Découvrez notre délicieux menu et ajoutez vos plats préférés.'
               : 'Discover our delicious menu and add your favorite items.'}
           </p>
+          <br />
           <Link
             href="/menu"
-            className="inline-flex items-center bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-full font-medium transition-colors whitespace-nowrap cursor-pointer"
+            className="inline-flex items-center bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-full font-medium transition-colors whitespace-nowrap cursor-pointer"
           >
             <i className="ri-restaurant-line mr-2"></i>
             {language === 'fr' ? 'Voir le menu' : 'Browse Menu'}
@@ -88,7 +89,7 @@ export default function CartItems() {
                     <div className="flex items-start space-x-3 flex-1">
                       <div className="flex-1">
                         <h3 className="text-lg font-semibold text-gray-900 mb-1">{item.name}</h3>
-                        <p className="text-orange-500 font-medium text-lg">{item.price}</p>
+                        <p className="text-red-500 font-medium text-lg">{item.price}</p>
                         <p className="text-sm text-gray-500">{item.category}</p>
                       </div>
                     </div>
@@ -151,7 +152,7 @@ export default function CartItems() {
                 </Link>
                 <Link
                   href="/checkout"
-                  className="flex items-center justify-center bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-full font-medium transition-colors whitespace-nowrap cursor-pointer"
+                  className="flex items-center justify-center bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-full font-medium transition-colors whitespace-nowrap cursor-pointer"
                 >
                   {language === 'fr' ? 'Passer au paiement' : 'Proceed to Checkout'}
                 </Link>
