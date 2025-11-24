@@ -10,7 +10,7 @@ export default function ContactInfo() {
       <div className="max-w-7xl mx-auto px-8">
         <div className="text-center mb-16">
           <h2 className="text-5xl font-bold mb-4 text-brand-charcoal" style={{ fontFamily: 'var(--font-pacifico)' }}>
-            {language === 'fr' ? 'Visitez le restaurant Royal Star' : 'Visit Royal Star Restaurant'}
+            {language === 'fr' ? 'Visitez le Royal Star Café' : 'Visit Royal Star Cafe'}
           </h2>
           <p className="text-xl text-gray-600">
             {language === 'fr'
@@ -47,7 +47,7 @@ export default function ContactInfo() {
               {language === 'fr' ? 'Téléphone' : 'Phone'}
             </h3>
             <p className="text-gray-600 mb-2">+41 22 525 88 11</p>
-            <p className="text-gray-600 mb-4">077 938 51 69 / 077 998 07 46</p>
+            {/* <p className="text-gray-600 mb-4">077 938 51 69 / 077 998 07 46</p> */}
             <a
               href="tel:+41 22 525 88 11"
               className="bg-brand-red hover:bg-brand-red-dark text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 whitespace-nowrap cursor-pointer inline-block w-full text-center"
@@ -64,9 +64,9 @@ export default function ContactInfo() {
               {language === 'fr' ? 'E-mail' : 'Email'}
             </h3>
             <p className="text-gray-600 mb-4">royal.star.geneve@gmail.com</p>
-            <p className="text-gray-600 mb-4">
+            {/* <p className="text-gray-600 mb-4">
               {language === 'fr' ? 'Nous répondons sous 12 heures' : 'We reply within 12 hours'}
-            </p>
+            </p> */}
             <a 
               href="mailto:royal.star.geneve@gmail.com"
               className="bg-brand-red hover:bg-brand-red-dark text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 whitespace-nowrap cursor-pointer inline-block w-full text-center"
@@ -96,7 +96,7 @@ export default function ContactInfo() {
             </div>
             <div>
               <h4 className="text-xl font-semibold text-red-900 mb-4">
-                {language === 'fr' ? 'Atouts du restaurant' : 'Restaurant Features'}
+                {language === 'fr' ? 'Atouts du café' : 'Cafe Features'}
               </h4>
               <div className="space-y-3">
                 <div className="flex items-center">

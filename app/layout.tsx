@@ -23,7 +23,7 @@ const geistMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Royal Star Cafe - Fine Swiss Restaurant in Geneva",
+  title: "Royal Star Cafe - Fine Swiss Cafe in Geneva",
   description: "Experience exquisite Swiss cuisine and fine dining at Royal Star Cafe in Geneva, Switzerland. Authentic flavors, elegant atmosphere, exceptional service.",
 };
 

@@ -22,8 +22,8 @@ export default function Footer() {
               </div>
               <p className="text-white/80 mb-6 leading-relaxed">
                 {language === 'fr'
-                  ? 'Découvrez l\'hospitalité suisse et un restaurant d\'exception au cœur du quartier Meyrin à Genève. Là où le charme suisse traditionnel rencontre la culture de la cuisine indienne.'
-                  : 'Discover Swiss hospitality and an exceptional restaurant in the heart of Geneva\'s Meyrin district. Where traditional Swiss charm meets the culture of Indian cuisine.'}
+                  ? 'Découvrez l\'hospitalité suisse et un café d\'exception au cœur du quartier Meyrin à Genève. Là où le charme suisse traditionnel rencontre la culture de la cuisine indienne.'
+                  : 'Discover Swiss hospitality and an exceptional cafe in the heart of Geneva\'s Meyrin district. Where traditional Swiss charm meets the culture of Indian cuisine.'}
               </p>
               <div className="flex space-x-4">
                 <a href="#" className="w-10 h-10 bg-brand-red rounded-full flex items-center justify-center hover:bg-brand-red-dark transition-colors cursor-pointer">
@@ -49,7 +49,8 @@ export default function Footer() {
                 </div>
                 <div className="flex items-center text-white/80">
                   <i className="ri-phone-line mr-3 text-brand-red"></i>
-                  <span>+41 22 525 88 11 / 077 938 51 69 / 077 998 07 46</span>
+                  <span>+41 22 525 88 11 </span> 
+                  {/* / 077 938 51 69 / 077 998 07 46 */}
                 </div>
                 <div className="flex items-center text-white/80">
                   <i className="ri-mail-line mr-3 text-brand-red"></i>

@@ -57,7 +57,7 @@ export default function CartItems() {
             href="/menu"
             className="inline-flex items-center bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-full font-medium transition-colors whitespace-nowrap cursor-pointer"
           >
-            <i className="ri-restaurant-line mr-2"></i>
+            <i className="ri--line mr-2"></i>
             {language === 'fr' ? 'Voir le menu' : 'Browse Menu'}
           </Link>
         </div>
@@ -90,7 +90,7 @@ export default function CartItems() {
                       <div className="flex-1">
                         <h3 className="text-lg font-semibold text-gray-900 mb-1">{item.name}</h3>
                         <p className="text-red-500 font-medium text-lg">{item.price}</p>
-                        <p className="text-sm text-gray-500">{item.category}</p>
+                        {/* <p className="text-sm text-gray-500">{item.category}</p> */}
                       </div>
                     </div>
                     

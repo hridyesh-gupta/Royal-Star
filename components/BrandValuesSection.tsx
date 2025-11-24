@@ -12,24 +12,24 @@ export default function BrandValuesSection() {
           </h2>
           <p className="text-xl text-brand-charcoal-soft max-w-3xl mx-auto leading-relaxed">
             {language === 'fr'
-              ? 'Le restaurant Royal Star incarne les plus belles traditions de l\'hospitalité et de l\'art culinaire suisses. Chaque repas est une célébration de saveurs authentiques, d\'un service impeccable et de la culture gastronomique raffinée des Indes à Meyrin.'
-              : 'The Royal Star Restaurant embodies the finest traditions of Swiss hospitality and culinary art. Each meal is a celebration of authentic flavors, impeccable service, and the refined gastronomic culture of the Indies in Meyrin.'}
+              ? 'Le Royal Star Café incarne les plus belles traditions de l\'hospitalité et de l\'art culinaire suisses. Chaque repas est une célébration de saveurs authentiques, d\'un service impeccable et de la culture gastronomique raffinée des Indes à Meyrin.'
+              : 'The Royal Star Café embodies the finest traditions of Swiss hospitality and culinary art. Each meal is a celebration of authentic flavors, impeccable service, and the refined gastronomic culture of the Indies in Meyrin.'}
           </p>
         </div>
         
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Left side - Restaurant atmosphere image */}
+          {/* Left side - Cafe atmosphere image */}
           <div className="order-2 md:order-1">
             <div className="relative rounded-2xl overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300">
               <img 
                 src="/10.jpg"
-                alt="Royal Star Restaurant Interior"
+                alt="Royal Star Cafe Interior"
                 className="w-full h-auto object-cover object-top"
               />
             </div>
           </div>
           
-          {/* Right side - Restaurant Values */}
+          {/* Right side - Cafe Values */}
           <div className="order-1 md:order-2">
             <div className="space-y-6">
               <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-md">
@@ -80,7 +80,7 @@ export default function BrandValuesSection() {
         <div className="mt-16 text-center">
           <div className="bg-white rounded-2xl shadow-lg p-8 max-w-4xl mx-auto">
             <h3 className="text-3xl font-bold text-brand-charcoal mb-6" style={{ fontFamily: 'var(--font-pacifico)' }}>
-              {language === 'fr' ? 'Pourquoi choisir le restaurant Royal Star ?' : 'Why Choose Royal Star Restaurant?'}
+              {language === 'fr' ? 'Pourquoi choisir le Royal Star Café?' : 'Why Choose Royal Star Cafe?'}
             </h3>
             <div className="grid md:grid-cols-4 gap-6">
               <div className="text-center">

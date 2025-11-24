@@ -46,8 +46,8 @@ export default function EventsSection() {
           </h2>
           <p className="text-xl text-red-800 max-w-3xl mx-auto">
             {language === 'fr'
-              ? 'Vivez des soirées inoubliables au Royal Star Restaurant avec nos événements spéciaux et nos expériences gastronomiques à thème.'
-              : 'Experience unforgettable evenings at Royal Star Restaurant with our curated special events and themed dining experiences.'}
+              ? 'Vivez des soirées inoubliables au Royal Star Café avec nos événements spéciaux et nos expériences gastronomiques à thème.'
+              : 'Experience unforgettable evenings at Royal Star Cafe with our curated special events and themed dining experiences.'}
           </p>
         </div>
 

@@ -31,7 +31,7 @@ export default function HeroSection() {
           <div className="mb-8">
             <img 
               src="/Logo.jpg" 
-              alt="Royal Star Restaurant Logo" 
+              alt="Royal Star Cafe Logo" 
               className="h-24 w-auto mx-auto drop-shadow-2xl"
             />
           </div>
@@ -39,7 +39,7 @@ export default function HeroSection() {
           <h1 className="text-6xl md:text-8xl font-bold mb-6" style={{ fontFamily: 'var(--font-pacifico)' }}>
             <span className="text-white drop-shadow-2xl">Royal Star</span>
             <br />
-            <span className="text-brand-red drop-shadow-2xl">Restaurant</span>
+            <span className="text-brand-red drop-shadow-2xl">Cafe</span>
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-8 font-medium drop-shadow-lg">
             {language === 'fr'

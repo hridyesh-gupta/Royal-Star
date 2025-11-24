@@ -26,7 +26,7 @@ export default function ContactHero() {
       <div className="relative z-10 text-center px-8 py-32 max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-6xl font-bold mb-4 text-white" style={{ fontFamily: 'var(--font-pacifico)' }}>
-            {language === 'fr' ? 'Visitez le restaurant Royal Star' : 'Visit Royal Star Restaurant'}
+            {language === 'fr' ? 'Visitez le Royal Star Café' : 'Visit Royal Star Cafe'}
           </h1>
           <p className="text-xl text-white/80 max-w-2xl mx-auto">
             {language === 'fr'
@@ -70,7 +70,7 @@ export default function ContactHero() {
               </div>
             </div> */}
               <h3 className="text-2xl font-bold mb-6 text-white">
-                {language === 'fr' ? 'Atouts du restaurant' : 'Restaurant Features'}
+                {language === 'fr' ? 'Atouts du café' : 'Cafe Features'}
               </h3>
               <div className="grid grid-cols-1 gap-3">
                 <div className="flex items-center justify-center">

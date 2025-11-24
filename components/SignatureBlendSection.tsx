@@ -68,7 +68,7 @@ export default function SignatureBlendSection() {
               Our Culinary Philosophy
             </h3>
             <p className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed mb-8">
-              At Royal Star Restaurant, we believe exceptional dining is an art form. Every dish tells a story of Swiss tradition, prepared with locally sourced ingredients and served with the warmth that defines Geneva's renowned hospitality.
+              At Royal Star Cafe, we believe exceptional dining is an art form. Every dish tells a story of Swiss tradition, prepared with locally sourced ingredients and served with the warmth that defines Geneva's renowned hospitality.
             </p>
             <div className="grid md:grid-cols-3 gap-8 text-white">
               <div className="text-center">

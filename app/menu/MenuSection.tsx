@@ -386,8 +386,8 @@ export default function MenuSection() {
         { "name": "Iced Tea Lemon Peach", "frname": "Thé froid, citron, pêche", "description": "", "frdescription": "", "price": "CHF 3.50" },
         { "name": "Schweppes Tonic Lemon", "frname": "Schweppes tonic, lemon", "description": "", "frdescription": "", "price": "CHF 3.50" },
         { 
-          "name": "red Juice, Pineapple Juice, Peach Juice)", 
-          "frname": "Jus d’red, jus d’ananas, jus de pêche", 
+          "name": "Orange Juice, Pineapple Juice, Peach Juice", 
+          "frname": "Jus d’orange, jus d’ananas, jus de pêche", 
           "description": "Fruit Juice 20 cl", 
           "frdescription": "Jus et nectars de fruits 20 cl", 
           "price": "CHF 3.50" 
@@ -426,7 +426,7 @@ export default function MenuSection() {
       ]
     },
     {
-      "title": "Wines Bottle 75 cl Glass 4 cl / Vins bouteille 75 cl verre 4 cl",
+      "title": "Wines Bottle 75 cl / Vins bouteille 75 cl",
       "items": [
         {
           "name": "Pinot Blanc 13.5% 2024 Switzerland",
@@ -506,7 +506,7 @@ export default function MenuSection() {
     },
 
     {
-      "title": "Spirits Digestifs Bottle 70 cl Glass 4 cl / Spiritueux Digestifs bouteille 70 cl verre 4 cl",
+      "title": "Spirits Digestifs Bottle 70 cl / Spiritueux Digestifs bouteille 70 cl",
       "items": [
         {
           "name": "Ballantines Red Label 40% Scotland",
@@ -684,12 +684,12 @@ export default function MenuSection() {
     "Indian Lassi 25 cl / Lassi indiens 25 cl",
     "Cold Drinks Mineral 50 cl / Boissons froides minérales 50 cl",
     "Beers Draft Bottle Can / Bières pression bouteille (B) et canette (C)",
-    "Spirits Digestifs Bottle 70 cl Glass 4 cl / Spiritueux Digestifs bouteille 70 cl verre 4 cl",
+    "Spirits Digestifs Bottle 70 cl / Spiritueux Digestifs bouteille 70 cl",
     "Cocktails with or without alcohol 25 cl / Cocktails avec ou sans alcool verre 25 cl",
   ];
 
   const wineCategoryTitles = [
-    "Wines Bottle 75 cl Glass 4 cl / Vins bouteille 75 cl verre 4 cl",
+    "Wines Bottle 75 cl / Vins bouteille 75 cl",
   ];
 
   const beverageCategories = foodCategories.filter((category) =>
@@ -744,6 +744,10 @@ export default function MenuSection() {
 
     const displayName = language === 'fr' && item.frname ? item.frname : item.name;
     const displayDescription = language === 'fr' && item.frdescription ? item.frdescription : item.description;
+
+    const isBottleOnlyCategory =
+      categoryTitle === 'Wines Bottle 75 cl' ||
+      categoryTitle === 'Spirits Digestifs Bottle 70 cl';
 
     const hasVariants = !!(item.price_bottle || item.price_glass);
 
@@ -801,19 +805,19 @@ export default function MenuSection() {
                     {isBottleAdded ? (
                       <span className="flex items-center gap-1">
                         <i className="ri-check-line"></i>
-                        {language === 'fr' ? 'Bouteille ajoutée' : 'Bottle added'}
+                        {language === 'fr' ? 'Ajouté' : 'Added'}
                       </span>
                     ) : (
                       <span className="flex items-center gap-1">
                         <i className="ri-add-line"></i>
-                        {language === 'fr' ? 'Ajouter bouteille' : 'Add bottle'}
+                        {language === 'fr' ? 'Ajouter' : 'Add'}
                       </span>
                     )}
                   </button>
                 </div>
               )}
 
-              {item.price_glass && (
+              {!isBottleOnlyCategory && item.price_glass && (
                 <div className="flex items-center gap-2">
                   <p className="font-medium text-red-800 whitespace-nowrap">
                     {item.price_glass} {language === 'fr' ? '(4 cl)' : '(4 cl)'}

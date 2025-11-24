@@ -97,8 +97,8 @@ export default function ChefSpecialSection() {
         <div className="text-center mt-12">
           <p className="text-brand-red-soft mb-6">
             {language === 'fr'
-              ? 'Vivez les saveurs authentiques de l’Inde au Royal Star Restaurant.'
-              : 'Experience the authentic flavors of India at Royal Star Restaurant'}
+              ? 'Vivez les saveurs authentiques de l’Inde au Royal Star Café.'
+              : 'Experience the authentic flavors of India at Royal Star Cafe'}
           </p>
           <Link href="/reservation">
             <button className="bg-white text-brand-charcoal hover:bg-brand-red-soft px-8 py-3 rounded-full font-bold transition-colors whitespace-nowrap cursor-pointer">

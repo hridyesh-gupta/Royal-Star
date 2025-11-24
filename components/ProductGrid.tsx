@@ -92,7 +92,7 @@ export default function ProductGrid() {
               Ready to Dine with Us?
             </h3>
             <p className="text-red-800 mb-6 text-lg">
-              Experience the finest Swiss cuisine and exceptional service at Royal Star Restaurant. 
+              Experience the finest Swiss cuisine and exceptional service at Royal Star Cafe. 
               Reserve your table today for an unforgettable dining experience.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
