@@ -742,7 +742,7 @@ export default function MenuSection() {
     const isBottleAdded = addedItems.has(bottleId);
     const isGlassAdded = addedItems.has(glassId);
 
-    const displayName = language === 'fr' && item.frname ? item.frname : item.name;
+    const displayName = item.name;
     const displayDescription = language === 'fr' && item.frdescription ? item.frdescription : item.description;
 
     const isBottleOnlyCategory =
