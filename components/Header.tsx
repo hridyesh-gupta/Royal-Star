@@ -34,9 +34,9 @@ export default function Header() {
             <Link href="/menu" className="text-brand-charcoal hover:text-brand-red-dark font-medium transition-colors cursor-pointer">
               {language === 'fr' ? 'Menu' : 'Menu'}
             </Link>
-            <Link href="/events" className="text-brand-charcoal hover:text-brand-red-dark font-medium transition-colors cursor-pointer">
+            {/* <Link href="/events" className="text-brand-charcoal hover:text-brand-red-dark font-medium transition-colors cursor-pointer">
               {language === 'fr' ? 'Événements' : 'Events'}
-            </Link>
+            </Link> */}
             <Link href="/contact" className="text-brand-charcoal hover:text-brand-red-dark font-medium transition-colors cursor-pointer">
               {language === 'fr' ? 'Contact' : 'Contact'}
             </Link>

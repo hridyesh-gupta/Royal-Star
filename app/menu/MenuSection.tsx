@@ -860,8 +860,8 @@ export default function MenuSection() {
           </h2>
           <p className="text-xl text-red-800 max-w-3xl mx-auto">
             {language === 'fr'
-              ? 'Cuisine indienne authentique avec hospitalité suisse. Ajoutez vos plats préférés au panier et profitez de nos délicieuses spécialités.'
-              : 'Authentic Indian cuisine with Swiss hospitality. Add your favorite dishes to cart and enjoy our delicious offerings.'}
+              ? 'Ajoutez vos plats préférés au panier et profitez de nos délicieuses spécialités (Pour la livraison uniquement).'
+              : 'Add your favorite dishes to cart and enjoy our delicious offerings (For Delivery Only).'}
           </p>
         </div>
 

@@ -28,7 +28,7 @@ export default function MenuHero() {
           <span className="w-6 h-6 flex items-center justify-center">
             <i className="ri-restaurant-line"></i>
           </span>
-          <span className="text-lg font-medium">From Farm to Table, Made with Swiss Precision</span>
+          <span className="text-lg font-medium">{language === 'fr' ? 'De la ferme à la table, fait avec la précision suisse' : 'From Farm to Table, Made with Swiss Precision'}</span>
         </div>
       </div>
     </section>

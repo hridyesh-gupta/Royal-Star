@@ -30,8 +30,8 @@ export default function ContactHero() {
           </h1>
           <p className="text-xl text-white/80 max-w-2xl mx-auto">
             {language === 'fr'
-              ? 'Découvrez une cuisine indienne authentique et l’hospitalité suisse à Meyrin.'
-              : 'Experience authentic Indian cuisine meets Swiss hospitality in Meyrin'}
+              ? 'Là où l\'authenticité rencontre l\'hospitalité suisse'
+              : 'Where authenticity meets Swiss hospitality'}
           </p>
         </div>
 
@@ -76,7 +76,7 @@ export default function ContactHero() {
                 <div className="flex items-center justify-center">
                   <i className="ri-check-line text-brand-red mr-2"></i>
                   <span className="text-white/80 text-lg font-medium">
-                    {language === 'fr' ? 'Cuisine indienne authentique' : 'Authentic Indian'}
+                    {language === 'fr' ? 'Authenticité' : 'Authenticity'}
                   </span>
                 </div>
                 <div className="flex items-center justify-center">

@@ -12,8 +12,8 @@ export default function BrandValuesSection() {
           </h2>
           <p className="text-xl text-brand-charcoal-soft max-w-3xl mx-auto leading-relaxed">
             {language === 'fr'
-              ? 'Le Royal Star Café incarne les plus belles traditions de l\'hospitalité et de l\'art culinaire suisses. Chaque repas est une célébration de saveurs authentiques, d\'un service impeccable et de la culture gastronomique raffinée des Indes à Meyrin.'
-              : 'The Royal Star Café embodies the finest traditions of Swiss hospitality and culinary art. Each meal is a celebration of authentic flavors, impeccable service, and the refined gastronomic culture of the Indies in Meyrin.'}
+              ? 'Le Royal Star Café incarne les plus belles traditions de l\'hospitalité et de l\'art culinaire suisses. Chaque repas est une célébration des saveurs authentiques et de la culture gastronomique raffinée des Indes à Meyrin.'
+              : 'The Royal Star Café embodies the finest traditions of Swiss hospitality and culinary art. Each meal is a celebration of authentic flavors and the refined gastronomic culture of the Indies in Meyrin.'}
           </p>
         </div>
         
@@ -37,12 +37,12 @@ export default function BrandValuesSection() {
                   <span className="w-6 h-6 flex items-center justify-center mr-3">
                     <i className="ri-restaurant-2-line text-green-600"></i>
                   </span>
-                  {language === 'fr' ? 'Cuisine indienne authentique' : 'Authentic Indian Cuisine'}
+                  {language === 'fr' ? 'Authenticité' : 'Authenticity'}
                 </h3>
                 <p className="text-brand-charcoal-soft">
                   {language === 'fr'
                     ? 'Recettes traditionnelles sublimées par des techniques culinaires maîtrisées, mettant en valeur les meilleurs ingrédients indiens et les produits locaux des régions alpines et du lac Léman.'
-                    : 'Traditional recipes refined with mastered culinary techniques, showcasing the finest Indian ingredients and local produce from the Alpine regions and Lake Geneva.'}
+                    : 'Traditional recipes refined with mastered culinary techniques, showcasing the finest ingredients and local produce from the Alpine regions and Lake Geneva.'}
                 </p>
               </div>
               

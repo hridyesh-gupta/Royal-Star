@@ -65,9 +65,14 @@ export default function SpecialOffersSection() {
                   alt={language === 'fr' ? offer.titleFr : offer.titleEn}
                   className="w-full h-48 object-cover object-top"
                 />
-                <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                <div className="absolute bottom-1 left-1 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
                   {language === 'fr' ? 'Économisez ' : 'Save '}CHF {(parseFloat(offer.originalPrice.replace('CHF ', '')) - parseFloat(offer.price.replace('CHF ', ''))).toFixed(2)}
                 </div>
+                {offer.titleEn!="Wine & Dine" && (
+                <div className="absolute top-1 right-1 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                  {language === 'fr' ? 'Uniquement en livraison' : 'Delivery only'}
+                </div>
+                )}
               </div>
               
               <div className="p-6">
@@ -101,8 +106,8 @@ export default function SpecialOffersSection() {
         <div className="text-center mt-12">
           <p className="text-red-700 mb-4">
             {language === 'fr'
-              ? '*Offres non cumulables. Valables uniquement sur place.'
-              : '*Offers cannot be combined. Valid for dine-in only.'}
+              ? '*Offres non cumulables.'
+              : '*Offers cannot be combined.'}
           </p>
           <Link href="/menu">
             <button className="bg-red-900 hover:bg-red-800 text-white px-8 py-3 rounded-full font-bold transition-colors whitespace-nowrap cursor-pointer">

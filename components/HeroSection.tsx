@@ -43,8 +43,8 @@ export default function HeroSection() {
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-8 font-medium drop-shadow-lg">
             {language === 'fr'
-              ? 'Une cuisine indienne authentique rencontre l’hospitalité suisse au cœur de Genève, dans le district de Meyrin'
-              : 'Authentic Indian cuisine meets Swiss hospitality in the heart of Geneva, in the Meyrin district'}
+              ? 'Là où l\'authenticité rencontre l\'hospitalité suisse à Meyrin, au cœur de Genève'
+              : 'Where authenticity meets Swiss hospitality in Meyrin, the heart of Geneva'}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link href="/menu">

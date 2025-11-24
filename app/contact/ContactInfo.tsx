@@ -8,38 +8,37 @@ export default function ContactInfo() {
   return (
     <section className="py-20 bg-gradient-to-br from-red-50 to-red-50">
       <div className="max-w-7xl mx-auto px-8">
-        <div className="text-center mb-16">
+        {/* <div className="text-center mb-16">
           <h2 className="text-5xl font-bold mb-4 text-brand-charcoal" style={{ fontFamily: 'var(--font-pacifico)' }}>
             {language === 'fr' ? 'Visitez le Royal Star Café' : 'Visit Royal Star Cafe'}
           </h2>
           <p className="text-xl text-gray-600">
             {language === 'fr'
-              ? 'Découvrez une cuisine indienne authentique et l’hospitalité suisse à Meyrin.'
-              : 'Experience authentic Indian cuisine meets Swiss hospitality in Meyrin'}
+              ? 'Là où l\'authenticité rencontre l\'hospitalité suisse'
+              : 'Where authenticity meets Swiss hospitality'}
           </p>
-        </div>
+        </div> */}
 
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          <div className="bg-white rounded-xl p-8 shadow-lg text-center">
+        <div className="grid md:grid-cols-3 gap-8 mb-16 items-stretch">
+          <div className="bg-white rounded-xl p-8 shadow-lg text-center flex flex-col h-full">
             <div className="w-16 h-16 bg-brand-red rounded-full flex items-center justify-center mx-auto mb-6">
               <i className="ri-map-pin-line text-white text-2xl"></i>
             </div>
             <h3 className="text-2xl font-bold text-brand-charcoal mb-4">
               {language === 'fr' ? 'Adresse' : 'Location'}
             </h3>
-            <p className="text-gray-600 mb-2">16, Promenade des Champs-Fréchets</p>
-            <p className="text-gray-600 mb-4">1217 Meyrin, Switzerland</p>
+            <p className="text-gray-600 mb-2">Prom. des Champs-Fréchets 16, <br />CH-1217 Meyrin</p>
             <a 
               href="https://maps.app.goo.gl/84RrmAh3hDdGmtCt6"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-brand-red hover:bg-brand-red-dark text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 whitespace-nowrap cursor-pointer inline-block w-full text-center"
+              className="bg-brand-red hover:bg-brand-red-dark text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 whitespace-nowrap cursor-pointer inline-block w-full text-center mt-auto"
             >
                 {language === 'fr' ? 'Itinéraire' : 'Get Directions'}
               </a>
           </div>
 
-          <div className="bg-white rounded-xl p-8 shadow-lg text-center">
+          <div className="bg-white rounded-xl p-8 shadow-lg text-center flex flex-col h-full">
             <div className="w-16 h-16 bg-brand-red rounded-full flex items-center justify-center mx-auto mb-6">
               <i className="ri-phone-line text-white text-2xl"></i>
             </div>
@@ -50,13 +49,13 @@ export default function ContactInfo() {
             {/* <p className="text-gray-600 mb-4">077 938 51 69 / 077 998 07 46</p> */}
             <a
               href="tel:+41 22 525 88 11"
-              className="bg-brand-red hover:bg-brand-red-dark text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 whitespace-nowrap cursor-pointer inline-block w-full text-center"
+              className="bg-brand-red hover:bg-brand-red-dark text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 whitespace-nowrap cursor-pointer inline-block w-full text-center mt-auto"
             >
               {language === 'fr' ? 'Appeler' : 'Call Now'}
             </a>
           </div>
 
-          <div className="bg-white rounded-xl p-8 shadow-lg text-center">
+          <div className="bg-white rounded-xl p-8 shadow-lg text-center flex flex-col h-full">
             <div className="w-16 h-16 bg-brand-red rounded-full flex items-center justify-center mx-auto mb-6">
               <i className="ri-mail-line text-white text-2xl"></i>
             </div>
@@ -69,7 +68,7 @@ export default function ContactInfo() {
             </p> */}
             <a 
               href="mailto:royal.star.geneve@gmail.com"
-              className="bg-brand-red hover:bg-brand-red-dark text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 whitespace-nowrap cursor-pointer inline-block w-full text-center"
+              className="bg-brand-red hover:bg-brand-red-dark text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 whitespace-nowrap cursor-pointer inline-block w-full text-center mt-auto"
             >
               {language === 'fr' ? 'Envoyer un e-mail' : 'Send Email'}
             </a>

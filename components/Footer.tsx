@@ -22,8 +22,8 @@ export default function Footer() {
               </div>
               <p className="text-white/80 mb-6 leading-relaxed">
                 {language === 'fr'
-                  ? 'Découvrez l\'hospitalité suisse et un café d\'exception au cœur du quartier Meyrin à Genève. Là où le charme suisse traditionnel rencontre la culture de la cuisine indienne.'
-                  : 'Discover Swiss hospitality and an exceptional cafe in the heart of Geneva\'s Meyrin district. Where traditional Swiss charm meets the culture of Indian cuisine.'}
+                  ? 'Découvrez l\'hospitalité suisse et un café d\'exception au cœur du quartier Meyrin à Genève. Là où le charme traditionnel suisse rencontre la culture des saveurs authentiques et un accueil chaleureux.'
+                  : 'Discover Swiss hospitality and an exceptional cafe in the heart of Geneva\'s Meyrin district. Where traditional Swiss charm meets the culture of authentic flavors and warm hospitality.'}
               </p>
               <div className="flex space-x-4">
                 <a href="#" className="w-10 h-10 bg-brand-red rounded-full flex items-center justify-center hover:bg-brand-red-dark transition-colors cursor-pointer">
@@ -45,7 +45,7 @@ export default function Footer() {
               <div className="space-y-3">
                 <div className="flex items-center text-white/80">
                   <i className="ri-map-pin-line mr-3 text-brand-red"></i>
-                  <span>16, Promenade des Champs-Fréchets, 1217 Meyrin</span>
+                  <span>Promenade des Champs-Fréchets 16, CH-1217 Meyrin</span>
                 </div>
                 <div className="flex items-center text-white/80">
                   <i className="ri-phone-line mr-3 text-brand-red"></i>

@@ -34,8 +34,8 @@ export default function ChefSpecialSection() {
       descriptionFr: 'Fromage paneer grillé dans une riche sauce tomate et crème, un délice végétarien.',
       price: 'CHF 20.00',
       image: 'https://readdy.ai/api/search-image?query=Paneer%20tikka%20masala%20with%20grilled%20cottage%20cheese%20cubes%20in%20creamy%20tomato%20sauce%2C%20garnished%20with%20fresh%20herbs%2C%20colorful%20bell%20peppers%2C%20elegant%20vegetarian%20Indian%20dish%20presentation&width=400&height=300&seq=paneer-tikka&orientation=landscape',
-      badgeEn: 'Vegetarian Favorite',
-      badgeFr: 'Option végétarienne préférée'
+      badgeEn: 'Vegetarian Special',
+      badgeFr: 'Spécial végétarien'
     }
   ];
 
@@ -48,8 +48,8 @@ export default function ChefSpecialSection() {
           </h2>
           <p className="text-xl text-brand-red-soft max-w-3xl mx-auto">
             {language === 'fr'
-              ? 'Découvrez nos plats les plus appréciés, préparés avec des épices indiennes authentiques et des techniques culinaires traditionnelles.'
-              : 'Discover our most beloved dishes, crafted with authentic Indian spices and traditional cooking techniques'}
+              ? 'Découvrez nos plats les plus appréciés, préparés avec authenticité et selon des techniques culinaires traditionnelles, disponibles uniquement en livraison.'
+              : 'Discover our most beloved dishes, crafted with authenticity and traditional cooking techniques available only for delivery orders.'}
           </p>
         </div>
 
@@ -62,8 +62,11 @@ export default function ChefSpecialSection() {
                   alt={language === 'fr' ? dish.nameFr : dish.nameEn}
                   className="w-full h-48 object-cover object-top"
                 />
-                <div className="absolute top-4 left-4 bg-brand-red text-white px-3 py-1 rounded-full text-sm font-bold">
+                <div className="absolute bottom-1 left-1 bg-brand-red text-white px-3 py-1 rounded-full text-sm font-bold">
                   {language === 'fr' ? dish.badgeFr : dish.badgeEn}
+                </div>
+                <div className="absolute top-1 right-1 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                  {language === 'fr' ? 'Uniquement en livraison' : 'Delivery only'}
                 </div>
               </div>
               
@@ -97,8 +100,8 @@ export default function ChefSpecialSection() {
         <div className="text-center mt-12">
           <p className="text-brand-red-soft mb-6">
             {language === 'fr'
-              ? 'Vivez les saveurs authentiques de l’Inde au Royal Star Café.'
-              : 'Experience the authentic flavors of India at Royal Star Cafe'}
+              ? 'Découvrez les saveurs authentiques du Royal Star Café - Réservez votre table dès aujourd\'hui !'
+              : 'Experience the authentic flavors at Royal Star Cafe - Book your table today!'}
           </p>
           <Link href="/reservation">
             <button className="bg-white text-brand-charcoal hover:bg-brand-red-soft px-8 py-3 rounded-full font-bold transition-colors whitespace-nowrap cursor-pointer">
