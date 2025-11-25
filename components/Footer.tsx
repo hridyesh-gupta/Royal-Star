@@ -81,7 +81,7 @@ export default function Footer() {
                 ? '2024 Royal Star Cafe. Tous droits réservés.'
                 : '2024 Royal Star Cafe. All rights reserved.'}
             </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
+            {/* <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="#" className="text-white/60 hover:text-brand-red text-sm transition-colors cursor-pointer">
                 {language === 'fr' ? 'Politique de confidentialité' : 'Privacy Policy'}
               </a>
@@ -91,7 +91,7 @@ export default function Footer() {
               {/* <a href="#" className="text-white/60 hover:text-red-400 text-sm transition-colors cursor-pointer">
                 {language === 'fr' ? 'Politique de cookies' : 'Cookie Policy'}
               </a> */}
-            </div>
+            {/* //</div> */}
           </div>
         </div>
       </div>

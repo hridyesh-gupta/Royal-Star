@@ -5,6 +5,39 @@ import { useState, useEffect } from 'react';
 import { getCart, getCartTotal, clearCart, type CartItem } from '../../lib/cart';
 import { useLanguage } from '../../components/LanguageProvider';
 
+const DELIVERY_ZONES = [
+  {
+    name: 'Zone 1',
+    zipCodes: ['1211', '1217'],
+    minOrder: 20,
+    deliveryFee: 10,
+  },
+  {
+    name: 'Zone 2',
+    zipCodes: ['1214', '1215', '1216', '1218', '1220', '1242'],
+    minOrder: 40,
+    deliveryFee: 15,
+  },
+  {
+    name: 'Zone 3',
+    zipCodes: ['1201', '1202', '1203', '1209', '1219', '1239', '1292', '1293', '1294'],
+    minOrder: 60,
+    deliveryFee: 20,
+  },
+  {
+    name: 'Zone 4',
+    zipCodes: ['1213', '1232', '1233', '1236', '1237', '1281', '1283', '1288', '1290', '1291', '1295', '1296'],
+    minOrder: 80,
+    deliveryFee: 25,
+  },
+  {
+    name: 'Zone 5',
+    zipCodes: ['1204', '1205', '1206', '1207', '1208', '1212', '1227', '1228', '1258', '1285', '1286', '1287'],
+    minOrder: 100,
+    deliveryFee: 30,
+  },
+];
+
 export default function CheckoutForm() {
   const [deliveryMethod, setDeliveryMethod] = useState('delivery');
   const [customerInfo, setCustomerInfo] = useState({
@@ -28,8 +61,12 @@ export default function CheckoutForm() {
     setCartItems(getCart());
   }, []);
 
+  const selectedZone = DELIVERY_ZONES.find((zone) =>
+    zone.zipCodes.includes(address.postalCode)
+  );
+
   const subtotal = getCartTotal();
-  const deliveryFee = deliveryMethod === 'delivery' ? 3.50 : 0;
+  const deliveryFee = deliveryMethod === 'delivery' && selectedZone ? selectedZone.deliveryFee : 0;
   const total = subtotal + deliveryFee;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,6 +75,26 @@ export default function CheckoutForm() {
     if (cartItems.length === 0) {
       alert(language === 'fr' ? 'Votre panier est vide' : 'Your cart is empty');
       return;
+    }
+
+    if (deliveryMethod === 'delivery') {
+      if (!selectedZone) {
+        alert(
+          language === 'fr'
+            ? 'Veuillez sélectionner un code postal de livraison'
+            : 'Please select a delivery zipcode'
+        );
+        return;
+      }
+
+      if (subtotal < selectedZone.minOrder) {
+        alert(
+          language === 'fr'
+            ? `Montant minimum de commande pour ${selectedZone.name} : CHF ${selectedZone.minOrder.toFixed(2)}. Votre sous-total actuel est de CHF ${subtotal.toFixed(2)}.`
+            : `Minimum order for ${selectedZone.name} is CHF ${selectedZone.minOrder.toFixed(2)}. Your current subtotal is CHF ${subtotal.toFixed(2)}.`
+        );
+        return;
+      }
     }
 
     setIsLoading(true);
@@ -96,12 +153,12 @@ export default function CheckoutForm() {
             {/* Delivery Method */}
             <div className="bg-white rounded-xl shadow-lg p-6">
               <h2 className="text-xl font-semibold text-red-900 mb-4">
-                {language === 'fr' ? 'Mode de livraison' : 'Delivery Method'}
+                {language === 'fr' ? 'Méthode de commande' : 'Order Method'}
               </h2>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid gap-3">
                 {[
-                  { value: 'delivery', label: language === 'fr' ? 'Livraison' : 'Delivery', icon: 'truck' },
-                  { value: 'pickup', label: language === 'fr' ? 'À emporter' : 'Pickup', icon: 'store' }
+                  { value: 'delivery', label: language === 'fr' ? 'Livraison' : 'Delivery', icon: 'truck' }
+                  // { value: 'pickup', label: language === 'fr' ? 'À emporter' : 'Pickup', icon: 'store' }
                 ].map((method) => (
                   <button
                     key={method.value}
@@ -204,16 +261,37 @@ export default function CheckoutForm() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        {language === 'fr' ? 'Code postal *' : 'Postal Code *'}
+                        {language === 'fr' ? 'Code postal de livraison *' : 'Delivery Zipcode *'}
                       </label>
-                      <input
-                        type="text"
+                      <select
                         required
                         value={address.postalCode}
-                        onChange={(e) => setAddress({...address, postalCode: e.target.value})}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
-                        placeholder={language === 'fr' ? 'Entrez votre code postal' : 'Enter postal code'}
-                      />
+                        onChange={(e) => setAddress({ ...address, postalCode: e.target.value })}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm bg-white"
+                      >
+                        <option value="">
+                          {language === 'fr' ? 'Sélectionnez votre code postal' : 'Select your zipcode'}
+                        </option>
+                        {DELIVERY_ZONES.map((zone) => (
+                          <optgroup
+                            key={zone.name}
+                            label={`${zone.name} - ${language === 'fr' ? 'Commande minimum CHF' : 'Minimum Order: CHF'} ${zone.minOrder.toFixed(2)}, ${language === 'fr' ? 'Frais de livraison: CHF' : 'Delivery CHF'} ${zone.deliveryFee.toFixed(2)}`}
+                          >
+                            {zone.zipCodes.map((zip) => (
+                              <option key={zip} value={zip}>
+                                {zip}
+                              </option>
+                            ))}
+                          </optgroup>
+                        ))}
+                      </select>
+                      {selectedZone && (
+                        <p className="mt-2 text-xs text-gray-600">
+                          {language === 'fr'
+                            ? `Commande minimum pour ${selectedZone.name} : CHF ${selectedZone.minOrder.toFixed(2)}. Frais de livraison : CHF ${selectedZone.deliveryFee.toFixed(2)}.`
+                            : `Minimum order for ${selectedZone.name}: CHF ${selectedZone.minOrder.toFixed(2)}. Delivery fee: CHF ${selectedZone.deliveryFee.toFixed(2)}.`}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -337,7 +415,7 @@ export default function CheckoutForm() {
                       <span>{language === 'fr' ? 'Sous-total' : 'Subtotal'}</span>
                       <span>CHF {subtotal.toFixed(2)}</span>
                     </div>
-                    {deliveryMethod === 'delivery' && (
+                    {deliveryMethod === 'delivery' && selectedZone && (
                       <div className="flex justify-between text-sm">
                         <span>{language === 'fr' ? 'Frais de livraison' : 'Delivery Fee'}</span>
                         <span>CHF {deliveryFee.toFixed(2)}</span>
