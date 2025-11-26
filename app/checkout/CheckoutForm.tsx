@@ -467,7 +467,7 @@ export default function CheckoutForm() {
                 <button
                   type="submit"
                   disabled={isLoading || cartItems.length === 0}
-                  className="w-full bg-gradient-to-r from-red-900 to-red-600 hover:from-red-800 hover:to-red-500 disabled:from-gray-400 disabled:to-gray-500 text-white py-3 px-6 rounded-full font-medium transition-all duration-300 whitespace-nowrap"
+                  className="w-full bg-gradient-to-r from-red-900 to-red-600 hover:from-red-800 hover:to-red-500 disabled:from-gray-400 disabled:to-gray-500 text-white py-3 px-6 rounded-full font-medium transition-all duration-300"
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center">
