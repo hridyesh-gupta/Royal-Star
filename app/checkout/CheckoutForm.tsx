@@ -480,7 +480,15 @@ export default function CheckoutForm() {
                       : language === 'fr' ? 'Passer la commande (paiement à la livraison)' : 'Place Order (COD)'
                   )}
                 </button>
-                
+
+                <button
+                  type="button"
+                  onClick={() => { window.location.href = '/menu'; }}
+                  className="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 py-3 px-6 rounded-full font-medium transition-colors"
+                >
+                  {language === 'fr' ? 'Ajouter plus d’articles' : 'Add more items'}
+                </button>
+
                 <button
                   type="button"
                   onClick={handleClearCart}
