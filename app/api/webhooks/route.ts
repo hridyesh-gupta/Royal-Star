@@ -11,7 +11,7 @@ const OWNER_EMAIL = process.env.OWNER_EMAIL;
 
 const stripe = STRIPE_SECRET_KEY
   ? new Stripe(STRIPE_SECRET_KEY, {
-      apiVersion: "2023-10-16",
+      apiVersion: "2023-08-16",
     })
   : null;
 
