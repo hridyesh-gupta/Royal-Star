@@ -9,6 +9,18 @@ function normalizeLanguage(value: string | null): "en" | "fr" {
   return "en";
 }
 
+function formatZurichDate(date: Date, language: "en" | "fr"): string {
+  const locale = language === "fr" ? "fr-CH" : "en-CH";
+  return date.toLocaleString(locale, {
+    timeZone: "Europe/Zurich",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -45,6 +57,8 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    const receivedAt = formatZurichDate(new Date(), language);
+
     const ownerEmail = OWNER_EMAIL;
 
     if (ownerEmail) {
@@ -60,6 +74,7 @@ export async function POST(request: NextRequest) {
         <p><strong>${language === "fr" ? "Téléphone" : "Phone"}:</strong> ${phone}</p>
         <p><strong>${language === "fr" ? "Date" : "Date"}:</strong> ${date}</p>
         <p><strong>${language === "fr" ? "Heure" : "Time"}:</strong> ${time} (Europe/Zurich)</p>
+        <p><strong>${language === "fr" ? "Reçu le" : "Received at"} (Europe/Zurich):</strong> ${receivedAt}</p>
         <p><strong>${language === "fr" ? "Nombre de convives" : "Number of guests"}:</strong> ${guests}</p>
         <p><strong>${language === "fr" ? "Demandes particulières" : "Special requests"}:</strong> ${requests || "-"}</p>
       `;
@@ -78,8 +93,8 @@ export async function POST(request: NextRequest) {
 
     const customerSubject =
       language === "fr"
-        ? "Royal Restro – Demande de réservation reçue"
-        : "Royal Restro – Reservation request received";
+        ? "Royal Star Café – Demande de réservation reçue"
+        : "Royal Star Cafe – Reservation request received";
 
     const customerHtml =
       language === "fr"
@@ -90,7 +105,7 @@ export async function POST(request: NextRequest) {
           <p><strong>Heure :</strong> ${time} (Europe/Zurich)</p>
           <p><strong>Nombre de convives :</strong> ${guests}</p>
           <p><strong>Demandes particulières :</strong> ${requests || "-"}</p>
-          <p>Cordialement,<br/>Royal Restro</p>
+          <p>Cordialement,<br/>Royal Star Café</p>
         `
         : `
           <p>Dear ${name},</p>
@@ -99,7 +114,7 @@ export async function POST(request: NextRequest) {
           <p><strong>Time:</strong> ${time} (Europe/Zurich)</p>
           <p><strong>Number of guests:</strong> ${guests}</p>
           <p><strong>Special requests:</strong> ${requests || "-"}</p>
-          <p>Best regards,<br/>Royal Restro</p>
+          <p>Best regards,<br/>Royal Star Cafe</p>
         `;
 
     try {

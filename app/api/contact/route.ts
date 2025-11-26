@@ -9,6 +9,18 @@ function normalizeLanguage(value: string | null): "en" | "fr" {
   return "en";
 }
 
+function formatZurichDate(date: Date, language: "en" | "fr"): string {
+  const locale = language === "fr" ? "fr-CH" : "en-CH";
+  return date.toLocaleString(locale, {
+    timeZone: "Europe/Zurich",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
@@ -38,6 +50,8 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    const receivedAt = formatZurichDate(new Date(), language);
+
     const ownerEmail = OWNER_EMAIL;
 
     if (ownerEmail) {
@@ -51,6 +65,7 @@ export async function POST(request: NextRequest) {
         <p><strong>${language === "fr" ? "Nom" : "Name"}:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>${language === "fr" ? "Téléphone" : "Phone"}:</strong> ${phone || "-"}</p>
+        <p><strong>${language === "fr" ? "Reçu le" : "Received at"} (Europe/Zurich):</strong> ${receivedAt}</p>
         <p><strong>${language === "fr" ? "Sujet" : "Subject"}:</strong> ${subject}</p>
         <p><strong>${language === "fr" ? "Message" : "Message"}:</strong></p>
         <p>${message.replace(/\n/g, "<br/>")}</p>
@@ -66,8 +81,8 @@ export async function POST(request: NextRequest) {
 
     const customerSubject =
       language === "fr"
-        ? "Royal Restro – Nous avons bien reçu votre message"
-        : "Royal Restro – We have received your message";
+        ? "Royal Star Café – Nous avons bien reçu votre message"
+        : "Royal Star Cafe – We have received your message";
 
     const customerHtml =
       language === "fr"
@@ -77,7 +92,7 @@ export async function POST(request: NextRequest) {
           <p><strong>Sujet :</strong> ${subject}</p>
           <p><strong>Message :</strong></p>
           <p>${message.replace(/\n/g, "<br/>")}</p>
-          <p>Cordialement,<br/>Royal Restro</p>
+          <p>Cordialement,<br/>Royal Star Café</p>
         `
         : `
           <p>Dear ${name},</p>
@@ -85,7 +100,7 @@ export async function POST(request: NextRequest) {
           <p><strong>Subject:</strong> ${subject}</p>
           <p><strong>Message:</strong></p>
           <p>${message.replace(/\n/g, "<br/>")}</p>
-          <p>Best regards,<br/>Royal Restro</p>
+          <p>Best regards,<br/>Royal Star Cafe</p>
         `;
 
     await sendEmail({

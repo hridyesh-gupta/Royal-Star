@@ -4,7 +4,7 @@ const smtpHost = process.env.SMTP_HOST;
 const smtpPort = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT, 10) : 587;
 const smtpUser = process.env.SMTP_USER;
 const smtpPassword = process.env.SMTP_PASSWORD;
-const fromName = process.env.SMTP_FROM_NAME || "Royal Restro";
+const fromName = process.env.SMTP_FROM_NAME || "Royal Star Cafe";
 const fromEmail = process.env.SMTP_FROM_EMAIL || smtpUser;
 
 if (!smtpHost || !smtpUser || !smtpPassword || !fromEmail) {

@@ -141,7 +141,7 @@ export default function CheckoutForm() {
         setCustomerInfo({ fullName: '', email: '', phone: '' });
         setAddress({ street: '', city: '', postalCode: '' });
         setSpecialInstructions('');
-      }, 3000);
+      }, 8000);
     } catch (error) {
       console.error('Checkout error', error);
       alert(language === 'fr' ? "Une erreur s'est produite lors du traitement de votre commande." : 'Something went wrong while processing your order.');

@@ -30,6 +30,18 @@ function normalizeLanguage(value: string | null | undefined): LanguageCode {
   return "en";
 }
 
+function formatZurichDate(date: Date, language: LanguageCode): string {
+  const locale = language === "fr" ? "fr-CH" : "en-CH";
+  return date.toLocaleString(locale, {
+    timeZone: "Europe/Zurich",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 function buildOrderItemsHtmlFromDb(
   items: { name: string; quantity: number; unitPrice: any }[],
   language: LanguageCode
@@ -69,6 +81,7 @@ function buildOrderEmailHtmlFromDb(params: {
   subtotal: number;
   deliveryFee: number;
   total: number;
+  createdAt: Date;
   paymentMethod: "stripe" | "cod";
   customerName: string;
   customerEmail: string;
@@ -88,6 +101,7 @@ function buildOrderEmailHtmlFromDb(params: {
     subtotal,
     deliveryFee,
     total,
+    createdAt,
     paymentMethod,
     customerName,
     customerEmail,
@@ -102,6 +116,17 @@ function buildOrderEmailHtmlFromDb(params: {
     forCustomer,
   } = params;
 
+  const receivedAt = formatZurichDate(createdAt, language);
+  const expectedDeliveryBy = formatZurichDate(
+    new Date(createdAt.getTime() + 45 * 60 * 1000),
+    language
+  );
+
+  const timingBlock = forCustomer
+    ? `<p><strong>${language === "fr" ? "Heure de livraison estimée" : "Estimated delivery time"} (Europe/Zurich):</strong> ${expectedDeliveryBy}</p>`
+    : `<p><strong>${language === "fr" ? "Heure de réception" : "Received at"} (Europe/Zurich):</strong> ${receivedAt}</p>
+       <p><strong>${language === "fr" ? "Livraison attendue avant" : "Expected delivery before"} (Europe/Zurich):</strong> ${expectedDeliveryBy}</p>`;
+
   const greeting = forCustomer
     ? language === "fr"
       ? `Bonjour ${customerName},`
@@ -114,10 +139,10 @@ function buildOrderEmailHtmlFromDb(params: {
     ? language === "fr"
       ? paymentMethod === "stripe"
         ? "Merci pour votre commande. Votre paiement par carte a été accepté."
-        : "Merci pour votre commande. Vous pourrez payer en espèces / carte à la livraison."
+        : "Merci pour votre commande. Vous pourrez payer en espèces à la livraison."
       : paymentMethod === "stripe"
       ? "Thank you for your order. Your card payment has been accepted."
-      : "Thank you for your order. You can pay by cash / card on delivery."
+      : "Thank you for your order. You can pay by cash on delivery."
     : language === "fr"
     ? "Une nouvelle commande a été passée sur le site."
     : "A new order has been placed on the website.";
@@ -155,7 +180,7 @@ function buildOrderEmailHtmlFromDb(params: {
       ? "Votre commande sera prête dans environ 30 à 45 minutes."
       : "Your order will be ready in approximately 30–45 minutes.";
 
-  const closing = language === "fr" ? "Cordialement,<br/>Royal Restro" : "Best regards,<br/>Royal Restro";
+  const closing = language === "fr" ? "Cordialement,<br/>Royal Star Café" : "Best regards,<br/>Royal Star Cafe";
 
   return `
     <div>
@@ -176,6 +201,7 @@ function buildOrderEmailHtmlFromDb(params: {
         .toFixed(2)
         .replace(".00", ".-")}</p>
       ${instructionsBlock}
+      ${timingBlock}
       ${forCustomer ? `<p>${etaText}</p>` : ""}
       <p>${closing}</p>
     </div>
@@ -265,6 +291,7 @@ export async function POST(req: NextRequest) {
             subtotal,
             deliveryFee,
             total,
+            createdAt: order.createdAt,
             paymentMethod,
             customerName: order.customerName,
             customerEmail: order.customerEmail,
@@ -296,6 +323,7 @@ export async function POST(req: NextRequest) {
           subtotal,
           deliveryFee,
           total,
+          createdAt: order.createdAt,
           paymentMethod,
           customerName: order.customerName,
           customerEmail: order.customerEmail,
@@ -314,8 +342,8 @@ export async function POST(req: NextRequest) {
           to: order.customerEmail,
           subject:
             language === "fr"
-              ? `Royal Restro – Confirmation de commande ${order.orderNumber}`
-              : `Royal Restro – Order confirmation ${order.orderNumber}`,
+              ? `Royal Star Café – Confirmation de commande ${order.orderNumber}`
+              : `Royal Star Cafe – Order confirmation ${order.orderNumber}`,
           html: customerHtml,
         });
       }
