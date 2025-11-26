@@ -1,0 +1,129 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PREPARING
+  OUT_FOR_DELIVERY
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  STRIPE
+  COD
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum DeliveryMethod {
+  DELIVERY
+  PICKUP
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  NO_SHOW
+}
+
+enum ContactStatus {
+  NEW
+  READ
+  ARCHIVED
+}
+
+enum Language {
+  EN
+  FR
+}
+
+model Order {
+  id                   Int            @id @default(autoincrement())
+  orderNumber          String         @unique
+  status               OrderStatus    @default(PENDING)
+  paymentMethod        PaymentMethod
+  paymentStatus        PaymentStatus  @default(PENDING)
+  stripeSessionId      String?        @unique
+  stripePaymentIntentId String?       @unique
+
+  customerName         String
+  customerEmail        String
+  customerPhone        String
+
+  deliveryMethod       DeliveryMethod
+  addressStreet        String?
+  addressCity          String?
+  addressPostalCode    String?
+  deliveryZone         String?
+
+  subtotal             Decimal        @db.Decimal(10, 2)
+  deliveryFee          Decimal        @db.Decimal(10, 2)
+  total                Decimal        @db.Decimal(10, 2)
+  currency             String         @default("CHF")
+
+  specialInstructions  String?
+  language             Language       @default(EN)
+
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+
+  items                OrderItem[]
+}
+
+model OrderItem {
+  id          Int      @id @default(autoincrement())
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId     Int
+
+  menuItemId  String?
+  name        String
+  category    String
+  unitPrice   Decimal  @db.Decimal(10, 2)
+  quantity    Int
+  totalPrice  Decimal  @db.Decimal(10, 2)
+}
+
+model Reservation {
+  id                Int               @id @default(autoincrement())
+  name              String
+  email             String
+  phone             String
+
+  reservationDate   String
+  reservationTime   String
+  timezone          String            @default("Europe/Zurich")
+
+  guests            Int
+  specialRequests   String?
+  status            ReservationStatus @default(PENDING)
+  language          Language          @default(EN)
+
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+}
+
+model ContactMessage {
+  id          Int           @id @default(autoincrement())
+  name        String
+  email       String
+  phone       String?
+  subject     String
+  message     String
+  status      ContactStatus @default(NEW)
+  language    Language      @default(EN)
+  createdAt   DateTime      @default(now())
+}

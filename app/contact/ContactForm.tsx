@@ -27,10 +27,15 @@ export default function ContactForm() {
     setIsSubmitting(true);
     
     try {
+      const params = new URLSearchParams({
+        ...formData,
+        language,
+      } as Record<string, string>);
+
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData).toString()
+        body: params.toString()
       });
       
       if (response.ok) {

@@ -99,20 +99,54 @@ export default function CheckoutForm() {
 
     setIsLoading(true);
     
-    // Simulate processing
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setShowSuccess(true);
-    clearCart();
-    setIsLoading(false);
-    
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setShowSuccess(false);
-      setCustomerInfo({ fullName: '', email: '', phone: '' });
-      setAddress({ street: '', city: '', postalCode: '' });
-      setSpecialInstructions('');
-    }, 3000);
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          deliveryMethod,
+          customerInfo,
+          address,
+          specialInstructions,
+          paymentMethod,
+          cartItems,
+          language,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        const message = data?.error || (language === 'fr' ? "Une erreur s'est produite lors du traitement de votre commande." : 'Something went wrong while processing your order.');
+        alert(message);
+        setIsLoading(false);
+        return;
+      }
+
+      const data = await response.json();
+
+      if (paymentMethod === 'stripe' && data?.url) {
+        window.location.href = data.url as string;
+        return;
+      }
+
+      setShowSuccess(true);
+      clearCart();
+      setCartItems([]);
+      setIsLoading(false);
+
+      setTimeout(() => {
+        setShowSuccess(false);
+        setCustomerInfo({ fullName: '', email: '', phone: '' });
+        setAddress({ street: '', city: '', postalCode: '' });
+        setSpecialInstructions('');
+      }, 3000);
+    } catch (error) {
+      console.error('Checkout error', error);
+      alert(language === 'fr' ? "Une erreur s'est produite lors du traitement de votre commande." : 'Something went wrong while processing your order.');
+      setIsLoading(false);
+    }
   };
 
   const handleClearCart = () => {

@@ -31,17 +31,31 @@ export default function ReservationForm() {
     setSubmitStatus('idle');
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 800));
-      setSubmitStatus('success');
-      setFormData({
-        date: '',
-        time: '',
-        name: '',
-        email: '',
-        phone: '',
-        guests: '2',
-        requests: ''
+      const response = await fetch('/api/reservations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          language,
+        }),
       });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({
+          date: '',
+          time: '',
+          name: '',
+          email: '',
+          phone: '',
+          guests: '2',
+          requests: ''
+        });
+      } else {
+        setSubmitStatus('error');
+      }
     } catch (error) {
       setSubmitStatus('error');
     } finally {
