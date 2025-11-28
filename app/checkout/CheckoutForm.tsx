@@ -413,8 +413,8 @@ export default function CheckoutForm() {
           </div>
 
           {/* Right Column - Order Summary */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-lg p-6 sticky top-24">
+          <div className="lg:col-span-1 flex flex-col">
+            <div className="bg-white rounded-xl shadow-lg p-6 mt-auto">
               <h2 className="text-xl font-semibold text-red-900 mb-4">
                 {language === 'fr' ? 'Résumé de la commande' : 'Order Summary'}
               </h2>

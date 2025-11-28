@@ -107,11 +107,11 @@ export default function ContactHero() {
             <div className="space-y-4">
                 <div className="flex justify-center items-center">
                   <span
-                    className="text-white text-center"
+                    className="text-white text-center leading-9"
                     dangerouslySetInnerHTML={{
                       __html: language === 'fr' 
-                        ? 'Sam 08h00 - 00h00<br />Dim 08h00 - 22h30<br />Lun 07h30 - 22h00<br />Mar 07h30 - 22h00<br />Mer 07h30 - 22h00<br />Jeu 07h30 - 23h00<br />Ven 07h30 - 00h00'
-                        : 'Sat 8:00 AM - 12:00 AM<br />Sun 8:00 AM - 10:30 PM<br />Mon 7:30 AM - 10:00 PM<br />Tue 7:30 AM - 10:00 PM<br />Wed 7:30 AM - 10:00 PM<br />Thu 7:30 AM - 11:00 PM<br />Fri 7:30 AM - 12:00 AM'
+                       ? 'Lun - Mer :: 7:30 AM - 10:00 PM<br />Jeu - Sam :: 7:30 AM - 11:30 PM<br />Sun :: 8:00 AM - 10:30 PM'
+                        : 'Mon - Wed :: 7:30 AM - 10:00 PM<br />Thu - Sat :: 7:30 AM - 11:30 PM<br />Sun :: 8:00 AM - 10:30 PM'
                     }}
                   />
                 </div>

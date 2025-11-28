@@ -56,16 +56,19 @@ export default function Footer() {
                   <i className="ri-mail-line mr-3 text-brand-red"></i>
                   <span>royal.star.geneve@gmail.com</span>
                 </div>
-                <div className="flex items-center text-white/80">
-                  <i className="ri-time-line mr-3 text-brand-red"></i>
-                  <span
-                    dangerouslySetInnerHTML={{
-                      __html: language === 'fr'
-                        ? 'Sam 08h00 - 00h00<br />Dim 08h00 - 22h30<br />Lun 07h30 - 22h00<br />Mar 07h30 - 22h00<br />Mer 07h30 - 22h00<br />Jeu 07h30 - 23h00<br />Ven 07h30 - 00h00'
-                        : 'Sat 8:00 AM - 12:00 AM<br />Sun 8:00 AM - 10:30 PM<br />Mon 7:30 AM - 10:00 PM<br />Tue 7:30 AM - 10:00 PM<br />Wed 7:30 AM - 10:00 PM<br />Thu 7:30 AM - 11:00 PM<br />Fri 7:30 AM - 12:00 AM'
-                    }}
-                  />
+                <div className="flex items-start text-white/80">
+                  <i className="ri-time-line mr-3 text-brand-red text-xl mt-1"></i>
 
+                  <div className="flex flex-col leading-loose">
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          language === 'fr'
+                            ? 'Lun - Mer :: 7:30 AM - 10:00 PM<br />Jeu - Sam :: 7:30 AM - 11:30 PM<br />Dim :: 8:00 AM - 10:30 PM'
+                            : 'Mon - Wed :: 7:30 AM - 10:00 PM<br />Thu - Sat :: 7:30 AM - 11:30 PM<br />Sun :: 8:00 AM - 10:30 PM'
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
