@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import { prisma } from "./prisma";
 
-const AUTH_SECRET = process.env.AUTH_SECRET || "dev-secret-change-me";
+const AUTH_SECRET = process.env.AUTH_SECRET;
 
 type TokenPayload = {
   sub: number;
