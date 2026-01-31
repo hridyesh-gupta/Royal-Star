@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import prisma from "../../../lib/prisma";
 import { sendEmail } from "../../../lib/email";
+import { renderBaseEmail } from "../../../lib/emailTemplates";
 
 export const runtime = "nodejs";
 
@@ -81,6 +82,8 @@ function buildOrderEmailHtmlFromDb(params: {
   subtotal: number;
   deliveryFee: number;
   total: number;
+  discountAmount: number;
+  promoCode?: string | null;
   createdAt: Date;
   paymentMethod: "stripe" | "cod";
   customerName: string;
@@ -101,6 +104,8 @@ function buildOrderEmailHtmlFromDb(params: {
     subtotal,
     deliveryFee,
     total,
+    discountAmount,
+    promoCode,
     createdAt,
     paymentMethod,
     customerName,
@@ -122,10 +127,25 @@ function buildOrderEmailHtmlFromDb(params: {
     language
   );
 
-  const timingBlock = forCustomer
-    ? `<p><strong>${language === "fr" ? "Heure de livraison estimée" : "Estimated delivery time"} (Europe/Zurich):</strong> ${expectedDeliveryBy}</p>`
-    : `<p><strong>${language === "fr" ? "Heure de réception" : "Received at"} (Europe/Zurich):</strong> ${receivedAt}</p>
-       <p><strong>${language === "fr" ? "Livraison attendue avant" : "Expected delivery before"} (Europe/Zurich):</strong> ${expectedDeliveryBy}</p>`;
+  const isDelivery = deliveryMethod === "DELIVERY";
+
+  const timingBlock = isDelivery
+    ? forCustomer
+      ? `<p><strong>${
+          language === "fr" ? "Heure de livraison estimée" : "Estimated delivery time"
+        } (Europe/Zurich):</strong> ${expectedDeliveryBy}</p>`
+      : `<p><strong>${
+          language === "fr" ? "Heure de réception" : "Received at"
+        } (Europe/Zurich):</strong> ${receivedAt}</p>
+         <p><strong>${
+           language === "fr" ? "Livraison attendue avant" : "Expected delivery before"
+         } (Europe/Zurich):</strong> ${expectedDeliveryBy}</p>`
+    : // Take Away (PICKUP): no delivery-specific timing block; owner can still see when it was received
+      !forCustomer
+      ? `<p><strong>${
+          language === "fr" ? "Heure de réception" : "Received at"
+        } (Europe/Zurich):</strong> ${receivedAt}</p>`
+      : "";
 
   const greeting = forCustomer
     ? language === "fr"
@@ -147,6 +167,14 @@ function buildOrderEmailHtmlFromDb(params: {
     ? "Une nouvelle commande a été passée sur le site."
     : "A new order has been placed on the website.";
 
+  const orderMethodLabel = language === "fr"
+    ? isDelivery
+      ? "Livraison"
+      : "À emporter"
+    : isDelivery
+    ? "Delivery"
+    : "Take Away";
+
   const paymentLabel =
     language === "fr"
       ? paymentMethod === "stripe"
@@ -159,7 +187,7 @@ function buildOrderEmailHtmlFromDb(params: {
   const itemsTable = buildOrderItemsHtmlFromDb(items, language);
 
   const addressBlock =
-    deliveryMethod === "DELIVERY"
+    isDelivery
       ? `
         <p><strong>${language === "fr" ? "Adresse de livraison" : "Delivery address"}:</strong><br/>
         ${addressStreet || ""}<br/>
@@ -180,32 +208,63 @@ function buildOrderEmailHtmlFromDb(params: {
       ? "Votre commande sera prête dans environ 30 à 45 minutes."
       : "Your order will be ready in approximately 30–45 minutes.";
 
-  const closing = language === "fr" ? "Cordialement,<br/>Royal Star Café" : "Best regards,<br/>Royal Star Cafe";
+  const discountLine =
+    discountAmount > 0
+      ? `<p><strong>${language === "fr" ? "Remise" : "Discount"}${
+          promoCode ? ` (${promoCode})` : ""
+        }:</strong> - CHF ${discountAmount
+          .toFixed(2)
+          .replace(".00", ".-")}</p>`
+      : "";
 
-  return `
-    <div>
-      <p>${greeting}</p>
-      <p>${intro}</p>
-      <p><strong>${language === "fr" ? "Numéro de commande" : "Order number"}:</strong> ${orderNumber}</p>
-      <p><strong>${language === "fr" ? "Méthode de paiement" : "Payment method"}:</strong> ${paymentLabel}</p>
-      <p><strong>${language === "fr" ? "Client" : "Customer"}:</strong> ${customerName} (${customerEmail}, ${customerPhone})</p>
-      ${addressBlock}
-      ${itemsTable}
-      <p><strong>${language === "fr" ? "Sous-total" : "Subtotal"}:</strong> CHF ${subtotal
-        .toFixed(2)
-        .replace(".00", ".-")}</p>
-      <p><strong>${language === "fr" ? "Frais de livraison" : "Delivery fee"}:</strong> CHF ${deliveryFee
-        .toFixed(2)
-        .replace(".00", ".-")}</p>
-      <p><strong>${language === "fr" ? "Total" : "Total"}:</strong> CHF ${total
-        .toFixed(2)
-        .replace(".00", ".-")}</p>
-      ${instructionsBlock}
-      ${timingBlock}
-      ${forCustomer ? `<p>${etaText}</p>` : ""}
-      <p>${closing}</p>
-    </div>
+  const deliveryFeeLine =
+    isDelivery && deliveryFee > 0
+      ? `<p><strong>${
+          language === "fr" ? "Frais de livraison" : "Delivery fee"
+        }:</strong> CHF ${deliveryFee
+          .toFixed(2)
+          .replace(".00", ".-")}</p>`
+      : "";
+
+  const introHtml = `
+    <p>${greeting}</p>
+    <p>${intro}</p>
   `;
+
+  const bodyHtml = `
+    <p><strong>${language === "fr" ? "Numéro de commande" : "Order number"}:</strong> ${orderNumber}</p>
+    <p><strong>${language === "fr" ? "Méthode de paiement" : "Payment method"}:</strong> ${paymentLabel}</p>
+    <p><strong>${language === "fr" ? "Méthode de commande" : "Order method"}:</strong> ${orderMethodLabel}</p>
+    <p><strong>${language === "fr" ? "Client" : "Customer"}:</strong> ${customerName} (${customerEmail}, ${customerPhone})</p>
+    ${addressBlock}
+    ${itemsTable}
+    <p><strong>${language === "fr" ? "Sous-total" : "Subtotal"}:</strong> CHF ${subtotal
+      .toFixed(2)
+      .replace(".00", ".-")}</p>
+    ${discountLine}
+    ${deliveryFeeLine}
+    <p><strong>${language === "fr" ? "Total" : "Total"}:</strong> CHF ${total
+      .toFixed(2)
+      .replace(".00", ".-")}</p>
+    ${instructionsBlock}
+    ${timingBlock}
+    ${forCustomer ? `<p>${etaText}</p>` : ""}
+  `;
+
+  const title = forCustomer
+    ? language === "fr"
+      ? `Confirmation de commande ${orderNumber}`
+      : `Order confirmation ${orderNumber}`
+    : language === "fr"
+    ? `Nouvelle commande ${orderNumber}`
+    : `New order ${orderNumber}`;
+
+  return renderBaseEmail({
+    language,
+    title,
+    introHtml,
+    bodyHtml,
+  });
 }
 
 export async function POST(req: NextRequest) {
@@ -248,7 +307,10 @@ export async function POST(req: NextRequest) {
             data: {
               paymentStatus: "PAID",
               status: "CONFIRMED",
-              stripePaymentIntentId: typeof session.payment_intent === "string" ? session.payment_intent : null,
+              stripePaymentIntentId:
+                typeof session.payment_intent === "string"
+                  ? session.payment_intent
+                  : null,
             },
             include: {
               items: true,
@@ -263,7 +325,10 @@ export async function POST(req: NextRequest) {
           data: {
             paymentStatus: "PAID",
             status: "CONFIRMED",
-            stripePaymentIntentId: typeof session.payment_intent === "string" ? session.payment_intent : null,
+            stripePaymentIntentId:
+              typeof session.payment_intent === "string"
+                ? session.payment_intent
+                : null,
           },
           include: {
             items: true,
@@ -275,6 +340,8 @@ export async function POST(req: NextRequest) {
         const subtotal = Number(order.subtotal);
         const deliveryFee = Number(order.deliveryFee);
         const total = Number(order.total);
+        const discountAmount = Number(order.discountAmount || 0);
+        const promoCode = order.promoCode || null;
 
         const items = order.items.map((item: any) => ({
           name: item.name,
@@ -291,6 +358,8 @@ export async function POST(req: NextRequest) {
             subtotal,
             deliveryFee,
             total,
+            discountAmount,
+            promoCode,
             createdAt: order.createdAt,
             paymentMethod,
             customerName: order.customerName,
@@ -323,6 +392,8 @@ export async function POST(req: NextRequest) {
           subtotal,
           deliveryFee,
           total,
+          discountAmount,
+          promoCode,
           createdAt: order.createdAt,
           paymentMethod,
           customerName: order.customerName,

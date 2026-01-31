@@ -7,6 +7,7 @@ import { useLanguage } from '../../components/LanguageProvider';
 
 export default function MenuSection() {
   const [addedItems, setAddedItems] = useState<Set<string>>(new Set());
+  const [openCategories, setOpenCategories] = useState<Set<string>>(new Set());
   const { language } = useLanguage();
 
   const handleAddToCart = (
@@ -59,6 +60,18 @@ export default function MenuSection() {
         return newSet;
       });
     }, 2000);
+  };
+
+  const toggleCategory = (key: string) => {
+    setOpenCategories((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) {
+        next.delete(key);
+      } else {
+        next.add(key);
+      }
+      return next;
+    });
   };
 
   const foodCategories = [
@@ -878,17 +891,37 @@ export default function MenuSection() {
             {displayFoodCategories.map((category, idx) => {
               const { en: titleEn, fr: titleFr } = getCategoryTitles(category.title);
               const displayTitle = language === 'fr' ? titleFr : titleEn;
+              const key = category.title;
+              const isOpen = openCategories.has(key);
 
               return (
-                <div key={idx} className="bg-white rounded-2xl shadow-lg p-8">
-                  <h4 className="text-2xl font-bold text-red-900 mb-6 text-center" style={{ fontFamily: 'var(--font-pacifico)' }}>
-                    {displayTitle}
-                  </h4>
+                <div key={idx}>
+                  <div className="bg-white rounded-2xl shadow-lg">
+                    <button
+                      type="button"
+                      onClick={() => toggleCategory(key)}
+                      className="w-full flex items-center justify-between px-8 py-4 cursor-pointer"
+                    >
+                      <h4
+                        className="text-2xl font-bold text-red-900 text-left"
+                        style={{ fontFamily: 'var(--font-pacifico)' }}
+                      >
+                        {displayTitle}
+                      </h4>
+                      <i
+                        className={`ri-arrow-${isOpen ? 'up' : 'down'}-s-line text-2xl text-red-900`}
+                      ></i>
+                    </button>
 
-                  <div className="space-y-4">
-                    {Array.isArray(category.items)
-                      ? category.items.map((item, itemIdx) => renderItem(item, itemIdx, titleEn))
-                      : null}
+                    {isOpen && (
+                      <div className="px-8 pb-6">
+                        <div className="space-y-4">
+                          {Array.isArray(category.items)
+                            ? category.items.map((item, itemIdx) => renderItem(item, itemIdx, titleEn))
+                            : null}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
@@ -909,17 +942,37 @@ export default function MenuSection() {
             {beverageCategories.map((category, idx) => {
               const { en: titleEn, fr: titleFr } = getCategoryTitles(category.title);
               const displayTitle = language === 'fr' ? titleFr : titleEn;
+              const key = category.title;
+              const isOpen = openCategories.has(key);
 
               return (
-                <div key={idx} className="bg-white rounded-2xl shadow-lg p-8">
-                  <h4 className="text-2xl font-bold text-red-900 mb-6 text-center" style={{ fontFamily: 'var(--font-pacifico)' }}>
-                    {displayTitle}
-                  </h4>
+                <div key={idx}>
+                  <div className="bg-white rounded-2xl shadow-lg">
+                    <button
+                      type="button"
+                      onClick={() => toggleCategory(key)}
+                      className="w-full flex items-center justify-between px-8 py-4 cursor-pointer"
+                    >
+                      <h4
+                        className="text-2xl font-bold text-red-900 text-left"
+                        style={{ fontFamily: 'var(--font-pacifico)' }}
+                      >
+                        {displayTitle}
+                      </h4>
+                      <i
+                        className={`ri-arrow-${isOpen ? 'up' : 'down'}-s-line text-2xl text-red-900`}
+                      ></i>
+                    </button>
 
-                  <div className="space-y-4">
-                    {Array.isArray(category.items)
-                      ? category.items.map((item, itemIdx) => renderItem(item, itemIdx, titleEn))
-                      : null}
+                    {isOpen && (
+                      <div className="px-8 pb-6">
+                        <div className="space-y-4">
+                          {Array.isArray(category.items)
+                            ? category.items.map((item, itemIdx) => renderItem(item, itemIdx, titleEn))
+                            : null}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
@@ -940,17 +993,37 @@ export default function MenuSection() {
             {wineCategories.map((category, idx) => {
               const { en: titleEn, fr: titleFr } = getCategoryTitles(category.title);
               const displayTitle = language === 'fr' ? titleFr : titleEn;
+              const key = category.title;
+              const isOpen = openCategories.has(key);
 
               return (
-                <div key={idx} className="bg-white rounded-2xl shadow-lg p-8">
-                  <h4 className="text-2xl font-bold text-red-900 mb-6 text-center" style={{ fontFamily: 'var(--font-pacifico)' }}>
-                    {displayTitle}
-                  </h4>
+                <div key={idx}>
+                  <div className="bg-white rounded-2xl shadow-lg">
+                    <button
+                      type="button"
+                      onClick={() => toggleCategory(key)}
+                      className="w-full flex items-center justify-between px-8 py-4 cursor-pointer"
+                    >
+                      <h4
+                        className="text-2xl font-bold text-red-900 text-left"
+                        style={{ fontFamily: 'var(--font-pacifico)' }}
+                      >
+                        {displayTitle}
+                      </h4>
+                      <i
+                        className={`ri-arrow-${isOpen ? 'up' : 'down'}-s-line text-2xl text-red-900`}
+                      ></i>
+                    </button>
 
-                  <div className="space-y-4">
-                    {Array.isArray(category.items)
-                      ? category.items.map((item, itemIdx) => renderItem(item, itemIdx, titleEn))
-                      : null}
+                    {isOpen && (
+                      <div className="px-8 pb-6">
+                        <div className="space-y-4">
+                          {Array.isArray(category.items)
+                            ? category.items.map((item, itemIdx) => renderItem(item, itemIdx, titleEn))
+                            : null}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               );

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../lib/prisma";
 import { sendEmail } from "../../../lib/email";
+import { renderBaseEmail } from "../../../lib/emailTemplates";
 
 const OWNER_EMAIL = process.env.OWNER_EMAIL;
 
@@ -67,17 +68,24 @@ export async function POST(request: NextRequest) {
           ? `Nouvelle réservation - ${date} ${time}`
           : `New reservation - ${date} ${time}`;
 
-      const ownerHtml = `
-        <p>${language === "fr" ? "Vous avez reçu une nouvelle demande de réservation." : "You have received a new reservation request."}</p>
-        <p><strong>${language === "fr" ? "Nom" : "Name"}:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>${language === "fr" ? "Téléphone" : "Phone"}:</strong> ${phone}</p>
-        <p><strong>${language === "fr" ? "Date" : "Date"}:</strong> ${date}</p>
-        <p><strong>${language === "fr" ? "Heure" : "Time"}:</strong> ${time} (Europe/Zurich)</p>
-        <p><strong>${language === "fr" ? "Reçu le" : "Received at"} (Europe/Zurich):</strong> ${receivedAt}</p>
-        <p><strong>${language === "fr" ? "Nombre de convives" : "Number of guests"}:</strong> ${guests}</p>
-        <p><strong>${language === "fr" ? "Demandes particulières" : "Special requests"}:</strong> ${requests || "-"}</p>
-      `;
+      const ownerHtml = renderBaseEmail({
+        language,
+        title: ownerSubject,
+        introHtml:
+          language === "fr"
+            ? `<p>Bonjour,</p><p>Vous avez reçu une nouvelle demande de réservation depuis le site.</p>`
+            : `<p>Hello,</p><p>You have received a new reservation request from the website.</p>`,
+        bodyHtml: `
+          <p><strong>${language === "fr" ? "Nom" : "Name"}:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>${language === "fr" ? "Téléphone" : "Phone"}:</strong> ${phone}</p>
+          <p><strong>${language === "fr" ? "Date" : "Date"}:</strong> ${date}</p>
+          <p><strong>${language === "fr" ? "Heure" : "Time"}:</strong> ${time} (Europe/Zurich)</p>
+          <p><strong>${language === "fr" ? "Reçu le" : "Received at"} (Europe/Zurich):</strong> ${receivedAt}</p>
+          <p><strong>${language === "fr" ? "Nombre de convives" : "Number of guests"}:</strong> ${guests}</p>
+          <p><strong>${language === "fr" ? "Demandes particulières" : "Special requests"}:</strong> ${requests || "-"}</p>
+        `,
+      });
 
       try {
         await sendEmail({
@@ -96,26 +104,34 @@ export async function POST(request: NextRequest) {
         ? "Royal Star Café – Demande de réservation reçue"
         : "Royal Star Cafe – Reservation request received";
 
-    const customerHtml =
+    const customerIntro =
+      language === "fr"
+        ? `<p>Bonjour ${name},</p>`
+        : `<p>Dear ${name},</p>`;
+
+    const customerBody =
       language === "fr"
         ? `
-          <p>Bonjour ${name},</p>
-          <p>Merci pour votre demande de réservation. Nous l'avons bien reçue et nous vous contacterons pour la confirmer.</p>
+          <p>Merci pour votre demande de réservation.</p>
           <p><strong>Date :</strong> ${date}</p>
           <p><strong>Heure :</strong> ${time} (Europe/Zurich)</p>
           <p><strong>Nombre de convives :</strong> ${guests}</p>
           <p><strong>Demandes particulières :</strong> ${requests || "-"}</p>
-          <p>Cordialement,<br/>Royal Star Café</p>
         `
         : `
-          <p>Dear ${name},</p>
-          <p>Thank you for your reservation request. We have received it and will contact you to confirm.</p>
+          <p>Thank you for your reservation request.</p>
           <p><strong>Date:</strong> ${date}</p>
           <p><strong>Time:</strong> ${time} (Europe/Zurich)</p>
           <p><strong>Number of guests:</strong> ${guests}</p>
           <p><strong>Special requests:</strong> ${requests || "-"}</p>
-          <p>Best regards,<br/>Royal Star Cafe</p>
         `;
+
+    const customerHtml = renderBaseEmail({
+      language,
+      title: customerSubject,
+      introHtml: customerIntro,
+      bodyHtml: customerBody,
+    });
 
     try {
       await sendEmail({

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import prisma from "../../../lib/prisma";
 import { sendEmail } from "../../../lib/email";
+import { renderBaseEmail } from "../../../lib/emailTemplates";
+import { getUserFromToken } from "../../../lib/auth";
 
 const OWNER_EMAIL = process.env.OWNER_EMAIL;
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
@@ -139,6 +141,8 @@ function buildOrderEmailHtml(params: {
   subtotal: number;
   deliveryFee: number;
   total: number;
+  discountAmount: number;
+  promoCode?: string | null;
   createdAt: Date;
   paymentMethod: "stripe" | "cod";
   customerName: string;
@@ -159,6 +163,8 @@ function buildOrderEmailHtml(params: {
     subtotal,
     deliveryFee,
     total,
+    discountAmount,
+    promoCode,
     createdAt,
     paymentMethod,
     customerName,
@@ -180,10 +186,25 @@ function buildOrderEmailHtml(params: {
     language
   );
 
-  const timingBlock = forCustomer
-    ? `<p><strong>${language === "fr" ? "Heure de livraison estimée" : "Estimated delivery time"} (Europe/Zurich):</strong> ${expectedDeliveryBy}</p>`
-    : `<p><strong>${language === "fr" ? "Heure de réception" : "Received at"} (Europe/Zurich):</strong> ${receivedAt}</p>
-       <p><strong>${language === "fr" ? "Livraison attendue avant" : "Expected delivery before"} (Europe/Zurich):</strong> ${expectedDeliveryBy}</p>`;
+  const isDelivery = deliveryMethod === "delivery";
+
+  const timingBlock = isDelivery
+    ? forCustomer
+      ? `<p><strong>${
+          language === "fr" ? "Heure de livraison estimée" : "Estimated delivery time"
+        } (Europe/Zurich):</strong> ${expectedDeliveryBy}</p>`
+      : `<p><strong>${
+          language === "fr" ? "Heure de réception" : "Received at"
+        } (Europe/Zurich):</strong> ${receivedAt}</p>
+         <p><strong>${
+           language === "fr" ? "Livraison attendue avant" : "Expected delivery before"
+         } (Europe/Zurich):</strong> ${expectedDeliveryBy}</p>`
+    : // Take Away: no delivery-specific timing block; owner can still see when it was received
+      !forCustomer
+      ? `<p><strong>${
+          language === "fr" ? "Heure de réception" : "Received at"
+        } (Europe/Zurich):</strong> ${receivedAt}</p>`
+      : "";
 
   const greeting = forCustomer
     ? language === "fr"
@@ -204,6 +225,14 @@ function buildOrderEmailHtml(params: {
     : language === "fr"
     ? "Une nouvelle commande a été passée sur le site."
     : "A new order has been placed on the website.";
+
+  const orderMethodLabel = language === "fr"
+    ? isDelivery
+      ? "Livraison"
+      : "À emporter"
+    : isDelivery
+    ? "Delivery"
+    : "Take Away";
 
   const paymentLabel =
     language === "fr"
@@ -238,37 +267,72 @@ function buildOrderEmailHtml(params: {
       ? "Votre commande sera prête dans environ 30 à 45 minutes."
       : "Your order will be ready in approximately 30–45 minutes.";
 
-  const closing = language === "fr" ? "Cordialement,<br/>Royal Star Café" : "Best regards,<br/>Royal Star Cafe";
+  const discountLine =
+    discountAmount > 0
+      ? `<p><strong>${language === "fr" ? "Remise" : "Discount"}${
+          promoCode ? ` (${promoCode})` : ""
+        }:</strong> - CHF ${discountAmount
+          .toFixed(2)
+          .replace(".00", ".-")}</p>`
+      : "";
 
-  return `
-    <div>
-      <p>${greeting}</p>
-      <p>${intro}</p>
-      <p><strong>${language === "fr" ? "Numéro de commande" : "Order number"}:</strong> ${orderNumber}</p>
-      <p><strong>${language === "fr" ? "Méthode de paiement" : "Payment method"}:</strong> ${paymentLabel}</p>
-      <p><strong>${language === "fr" ? "Client" : "Customer"}:</strong> ${customerName} (${customerEmail}, ${customerPhone})</p>
-      ${addressBlock}
-      ${itemsTable}
-      <p><strong>${language === "fr" ? "Sous-total" : "Subtotal"}:</strong> CHF ${subtotal
-        .toFixed(2)
-        .replace(".00", ".-")}</p>
-      <p><strong>${language === "fr" ? "Frais de livraison" : "Delivery fee"}:</strong> CHF ${deliveryFee
-        .toFixed(2)
-        .replace(".00", ".-")}</p>
-      <p><strong>${language === "fr" ? "Total" : "Total"}:</strong> CHF ${total
-        .toFixed(2)
-        .replace(".00", ".-")}</p>
-      ${instructionsBlock}
-      ${timingBlock}
-      ${forCustomer ? `<p>${etaText}</p>` : ""}
-      <p>${closing}</p>
-    </div>
+  const deliveryFeeLine =
+    isDelivery && deliveryFee > 0
+      ? `<p><strong>${
+          language === "fr" ? "Frais de livraison" : "Delivery fee"
+        }:</strong> CHF ${deliveryFee
+          .toFixed(2)
+          .replace(".00", ".-")}</p>`
+      : "";
+
+  const introHtml = `
+    <p>${greeting}</p>
+    <p>${intro}</p>
   `;
+
+  const bodyHtml = `
+    <p><strong>${language === "fr" ? "Numéro de commande" : "Order number"}:</strong> ${orderNumber}</p>
+    <p><strong>${language === "fr" ? "Méthode de paiement" : "Payment method"}:</strong> ${paymentLabel}</p>
+    <p><strong>${language === "fr" ? "Méthode de commande" : "Order method"}:</strong> ${orderMethodLabel}</p>
+    <p><strong>${language === "fr" ? "Client" : "Customer"}:</strong> ${customerName} (${customerEmail}, ${customerPhone})</p>
+    ${addressBlock}
+    ${itemsTable}
+    <p><strong>${language === "fr" ? "Sous-total" : "Subtotal"}:</strong> CHF ${subtotal
+      .toFixed(2)
+      .replace(".00", ".-")}</p>
+    ${discountLine}
+    ${deliveryFeeLine}
+    <p><strong>${language === "fr" ? "Total" : "Total"}:</strong> CHF ${total
+      .toFixed(2)
+      .replace(".00", ".-")}</p>
+    ${instructionsBlock}
+    ${timingBlock}
+    ${forCustomer ? `<p>${etaText}</p>` : ""}
+  `;
+
+  const title = forCustomer
+    ? language === "fr"
+      ? `Confirmation de commande ${orderNumber}`
+      : `Order confirmation ${orderNumber}`
+    : language === "fr"
+    ? `Nouvelle commande ${orderNumber}`
+    : `New order ${orderNumber}`;
+
+  return renderBaseEmail({
+    language,
+    title,
+    introHtml,
+    bodyHtml,
+  });
 }
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+
+    const cookie = request.cookies.get("auth_token");
+    const token = cookie?.value ?? null;
+    const user = await getUserFromToken(token);
 
     const deliveryMethod: string = body.deliveryMethod || "delivery";
     const customerInfo = body.customerInfo || {};
@@ -290,6 +354,12 @@ export async function POST(request: NextRequest) {
     if (!customerName || !customerEmail || !customerPhone) {
       return NextResponse.json({ error: "Missing customer information" }, { status: 400 });
     }
+
+    const rawPromoCode: unknown = body.promoCode;
+    const promoCode =
+      typeof rawPromoCode === "string" && rawPromoCode.trim().length > 0
+        ? rawPromoCode.trim().toUpperCase()
+        : null;
 
     let postalCode: string | undefined = address.postalCode;
     if (typeof postalCode !== "string") {
@@ -332,7 +402,57 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const total = subtotal + deliveryFee;
+    let discountAmount = 0;
+    let appliedPromo: {
+      id: number;
+      code: string;
+      percentage: number;
+    } | null = null;
+
+    if (promoCode) {
+      const promo = await prisma.promoCode.findUnique({ where: { code: promoCode } });
+
+      if (!promo || !promo.active) {
+        return NextResponse.json(
+          { error: "Invalid or inactive promo code." },
+          { status: 400 }
+        );
+      }
+
+      if (!user) {
+        return NextResponse.json(
+          { error: "You must be logged in to use promo codes." },
+          { status: 401 }
+        );
+      }
+
+      const existingRedemption = await prisma.promoCodeRedemption.findFirst({
+        where: {
+          promoCodeId: promo.id,
+          OR: [
+            { userId: user.id },
+            { email: user.email },
+          ],
+        },
+      });
+
+      if (existingRedemption) {
+        return NextResponse.json(
+          { error: "You have already used this promo code." },
+          { status: 400 }
+        );
+      }
+
+      appliedPromo = {
+        id: promo.id,
+        code: promo.code,
+        percentage: promo.percentage,
+      };
+
+      discountAmount = Number(((subtotal * promo.percentage) / 100).toFixed(2));
+    }
+
+    const total = subtotal + deliveryFee - discountAmount;
 
     const orderNumber = generateOrderNumber();
 
@@ -347,13 +467,15 @@ export async function POST(request: NextRequest) {
         customerName,
         customerEmail,
         customerPhone,
-        deliveryMethod: "DELIVERY",
+        deliveryMethod: deliveryMethod === "delivery" ? "DELIVERY" : "PICKUP",
         addressStreet: deliveryMethod === "delivery" ? address.street || null : null,
         addressCity: deliveryMethod === "delivery" ? address.city || null : null,
         addressPostalCode: deliveryMethod === "delivery" ? postalCode || null : null,
         deliveryZone: deliveryMethod === "delivery" && selectedZone ? selectedZone.name : null,
         subtotal,
         deliveryFee,
+        discountAmount,
+        promoCode: appliedPromo ? appliedPromo.code : null,
         total,
         currency: "CHF",
         specialInstructions: specialInstructions || null,
@@ -378,6 +500,21 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    if (appliedPromo && discountAmount > 0) {
+      try {
+        await prisma.promoCodeRedemption.create({
+          data: {
+            promoCodeId: appliedPromo.id,
+            orderId: order.id,
+            email: user ? user.email : customerEmail,
+            userId: user ? user.id : null,
+          },
+        });
+      } catch (error) {
+        console.error("Error creating promo code redemption:", error);
+      }
+    }
+
     if (paymentMethod === "cod") {
       if (OWNER_EMAIL) {
         const ownerHtml = buildOrderEmailHtml({
@@ -386,6 +523,8 @@ export async function POST(request: NextRequest) {
           subtotal,
           deliveryFee,
           total,
+          discountAmount,
+          promoCode: appliedPromo ? appliedPromo.code : null,
           createdAt: order.createdAt,
           paymentMethod,
           customerName,
@@ -418,6 +557,8 @@ export async function POST(request: NextRequest) {
         subtotal,
         deliveryFee,
         total,
+        discountAmount,
+        promoCode: appliedPromo ? appliedPromo.code : null,
         createdAt: order.createdAt,
         paymentMethod,
         customerName,
@@ -454,34 +595,21 @@ export async function POST(request: NextRequest) {
 
     const origin = request.headers.get("origin") || "https://royal-star.ch";
 
-    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = cartItems.map(
-      (item) => {
-        const unitPrice = parsePrice(item.price);
-        return {
-          price_data: {
-            currency: "chf",
-            product_data: {
-              name: item.name,
-            },
-            unit_amount: Math.round(unitPrice * 100),
-          },
-          quantity: item.quantity,
-        };
-      }
-    );
-
-    if (deliveryFee > 0) {
-      lineItems.push({
+    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
+      {
         price_data: {
           currency: "chf",
           product_data: {
-            name: language === "fr" ? "Frais de livraison" : "Delivery fee",
+            name:
+              language === "fr"
+                ? "Commande Royal Star Cafe"
+                : "Royal Star Cafe Order",
           },
-          unit_amount: Math.round(deliveryFee * 100),
+          unit_amount: Math.round(total * 100),
         },
         quantity: 1,
-      });
-    }
+      },
+    ];
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",

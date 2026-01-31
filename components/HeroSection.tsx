@@ -1,11 +1,54 @@
 
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from './LanguageProvider';
 
+type AuthUser = {
+  id: number;
+  name: string | null;
+  email: string;
+  role: 'ADMIN' | 'CUSTOMER';
+};
+
 export default function HeroSection() {
   const { language } = useLanguage();
+  const [user, setUser] = useState<AuthUser | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadUser = async () => {
+      try {
+        const response = await fetch('/api/auth/me', { method: 'GET' });
+        if (!response.ok) {
+          if (isMounted) {
+            setUser(null);
+          }
+          return;
+        }
+
+        const data = (await response.json()) as { user: AuthUser | null };
+        if (isMounted) {
+          setUser(data.user ?? null);
+        }
+      } catch {
+        if (isMounted) {
+          setUser(null);
+        }
+      }
+    };
+
+    loadUser();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const primaryButtonClass =
+    'bg-brand-red hover:bg-brand-red-dark text-white px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg whitespace-nowrap cursor-pointer';
   return (
     <div className="relative h-screen w-full overflow-hidden">
       {/* Background Image */}
@@ -48,15 +91,28 @@ export default function HeroSection() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link href="/menu">
-              <button className="bg-brand-red hover:bg-brand-red-dark text-white px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg whitespace-nowrap cursor-pointer">
+              <button className={primaryButtonClass}>
                 {language === 'fr' ? 'Commander maintenant' : 'Order Now'}
               </button>
             </Link>
-            <Link href="/reservation">
-              <button className="bg-transparent border-2 border-white/80 hover:bg-white/10 text-white px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg whitespace-nowrap cursor-pointer">
-                {language === 'fr' ? 'Réserver votre table' : 'Reserve Your Table'}
-              </button>
-            </Link>
+            {user ? (
+              <Link href="/reservation">
+                <button className={primaryButtonClass}>
+                  {language === 'fr' ? 'Réserver une table' : 'Reserve Table'}
+                </button>
+              </Link>
+            ) : (
+              <div className="relative flex items-center">
+                <Link href="/register">
+                  <button className={primaryButtonClass}>
+                    {language === 'fr' ? "S'inscrire" : 'Register'}
+                  </button>
+                </Link>
+                <p className="absolute left-1/2 -translate-x-1/2 top-full mt-1 text-[10px] leading-tight tracking-wide uppercase text-white/80">
+                  {language === 'fr' ? 'OBTENEZ UN CODE PROMO' : 'GET PROMO CODE'}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>

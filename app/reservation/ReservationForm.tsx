@@ -204,8 +204,8 @@ export default function ReservationForm() {
             {submitStatus === 'success' && (
               <div className="bg-green-50 border border-green-400 text-green-700 px-4 py-3 rounded-xl text-sm">
                 {language === 'fr'
-                  ? 'Votre réservation a été enregistrée. Nous vous contacterons pour la confirmer.'
-                  : 'Your reservation request has been received. We will contact you to confirm.'}
+                  ? 'Votre réservation a été enregistrée.'
+                  : 'Your reservation request has been received.'}
               </div>
             )}
 

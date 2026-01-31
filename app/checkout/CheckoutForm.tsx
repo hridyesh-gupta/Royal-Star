@@ -5,6 +5,13 @@ import { useState, useEffect } from 'react';
 import { getCart, getCartTotal, clearCart, type CartItem } from '../../lib/cart';
 import { useLanguage } from '../../components/LanguageProvider';
 
+type AuthUser = {
+  id: number;
+  name: string | null;
+  email: string;
+  role: 'ADMIN' | 'CUSTOMER';
+};
+
 const DELIVERY_ZONES = [
   {
     name: 'Zone 1',
@@ -55,10 +62,46 @@ export default function CheckoutForm() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [promoInput, setPromoInput] = useState('');
+  const [appliedPromo, setAppliedPromo] = useState<{ code: string; percentage: number } | null>(null);
+  const [promoApplying, setPromoApplying] = useState(false);
+  const [promoError, setPromoError] = useState<string | null>(null);
   const { language } = useLanguage();
+  const [user, setUser] = useState<AuthUser | null>(null);
 
   useEffect(() => {
     setCartItems(getCart());
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadUser = async () => {
+      try {
+        const response = await fetch('/api/auth/me', { method: 'GET' });
+        if (!response.ok) {
+          if (isMounted) {
+            setUser(null);
+          }
+          return;
+        }
+
+        const data = (await response.json()) as { user: AuthUser | null };
+        if (isMounted) {
+          setUser(data.user ?? null);
+        }
+      } catch {
+        if (isMounted) {
+          setUser(null);
+        }
+      }
+    };
+
+    loadUser();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const selectedZone = DELIVERY_ZONES.find((zone) =>
@@ -67,7 +110,95 @@ export default function CheckoutForm() {
 
   const subtotal = getCartTotal();
   const deliveryFee = deliveryMethod === 'delivery' && selectedZone ? selectedZone.deliveryFee : 0;
-  const total = subtotal + deliveryFee;
+  const discountAmount =
+    appliedPromo
+      ? Number((subtotal * (appliedPromo.percentage / 100)).toFixed(2))
+      : 0;
+  const total = subtotal - discountAmount + deliveryFee;
+
+  const handleApplyPromo = async () => {
+    const code = promoInput.trim();
+
+    if (!code) {
+      setPromoError(
+        language === 'fr'
+          ? 'Veuillez entrer un code promo.'
+          : 'Please enter a promo code.'
+      );
+      return;
+    }
+
+    if (!customerInfo.email.trim()) {
+      setPromoError(
+        language === 'fr'
+          ? 'Veuillez saisir votre adresse e-mail avant d’appliquer un code promo.'
+          : 'Please enter your email address before applying a promo code.'
+      );
+      return;
+    }
+
+    if (cartItems.length === 0) {
+      setPromoError(
+        language === 'fr'
+          ? 'Votre panier est vide.'
+          : 'Your cart is empty.'
+      );
+      return;
+    }
+
+    setPromoApplying(true);
+    setPromoError(null);
+
+    try {
+      const response = await fetch('/api/promocodes/apply', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          code,
+        }),
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        const message = data?.error || (
+          language === 'fr'
+            ? 'Impossible d’appliquer ce code promo.'
+            : 'Unable to apply this promo code.'
+        );
+        setPromoError(message);
+        setAppliedPromo(null);
+        return;
+      }
+
+      const promo = data?.promoCode as { code?: string; percentage?: number } | undefined;
+      if (!promo || !promo.code || typeof promo.percentage !== 'number') {
+        setPromoError(
+          language === 'fr'
+            ? 'Réponse invalide du serveur pour le code promo.'
+            : 'Invalid server response for promo code.'
+        );
+        setAppliedPromo(null);
+        return;
+      }
+
+      setAppliedPromo({ code: promo.code, percentage: promo.percentage });
+      setPromoInput(promo.code);
+      setPromoError(null);
+    } catch (error) {
+      console.error('Error applying promo code', error);
+      setPromoError(
+        language === 'fr'
+          ? 'Une erreur est survenue lors de l’application du code promo.'
+          : 'An error occurred while applying the promo code.'
+      );
+      setAppliedPromo(null);
+    } finally {
+      setPromoApplying(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,6 +244,7 @@ export default function CheckoutForm() {
           paymentMethod,
           cartItems,
           language,
+          promoCode: appliedPromo?.code || undefined,
         }),
       });
 
@@ -134,6 +266,9 @@ export default function CheckoutForm() {
       setShowSuccess(true);
       clearCart();
       setCartItems([]);
+      setAppliedPromo(null);
+      setPromoInput('');
+      setPromoError(null);
       setIsLoading(false);
 
       setTimeout(() => {
@@ -152,6 +287,9 @@ export default function CheckoutForm() {
   const handleClearCart = () => {
     clearCart();
     setCartItems([]);
+    setAppliedPromo(null);
+    setPromoInput('');
+    setPromoError(null);
   };
 
   if (showSuccess) {
@@ -191,8 +329,8 @@ export default function CheckoutForm() {
               </h2>
               <div className="grid gap-3">
                 {[
-                  { value: 'delivery', label: language === 'fr' ? 'Livraison' : 'Delivery', icon: 'truck' }
-                  // { value: 'pickup', label: language === 'fr' ? 'À emporter' : 'Pickup', icon: 'store' }
+                  { value: 'delivery', label: language === 'fr' ? 'Livraison' : 'Delivery', icon: 'truck' },
+                  { value: 'takeaway', label: language === 'fr' ? 'À emporter' : 'Take Away', icon: 'store' },
                 ].map((method) => (
                   <button
                     key={method.value}
@@ -415,6 +553,47 @@ export default function CheckoutForm() {
           {/* Right Column - Order Summary */}
           <div className="lg:col-span-1 flex flex-col">
             <div className="bg-white rounded-xl shadow-lg p-6 mt-auto">
+              {user && (
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    {language === 'fr' ? 'Code promo' : 'Promo Code'}
+                  </label>
+                  <div className="flex gap-2 flex-wrap sm:flex-nowrap">
+                    <input
+                      type="text"
+                      value={promoInput}
+                      onChange={(e) => setPromoInput(e.target.value.toUpperCase())}
+                      className="flex-1 min-w-0 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
+                      placeholder={language === 'fr' ? 'Entrez votre code promo' : 'Enter your promo code'}
+                    />
+                    <button
+                      type="button"
+                      onClick={handleApplyPromo}
+                      disabled={promoApplying || cartItems.length === 0}
+                      className="px-4 py-2 rounded-lg bg-red-600 text-white text-sm font-semibold hover:bg-red-700 disabled:opacity-60 whitespace-nowrap"
+                    >
+                      {promoApplying
+                        ? (language === 'fr' ? 'Application...' : 'Applying...')
+                        : (language === 'fr' ? 'Appliquer' : 'Apply')}
+                    </button>
+                  </div>
+                  <p className="mt-1 text-xs text-gray-500">
+                    {language === 'fr'
+                      ? 'Les codes promo sont limités à une utilisation par client.'
+                      : 'Promo codes are limited to one use per customer.'}
+                  </p>
+                  {promoError && (
+                    <p className="mt-1 text-xs text-red-600">{promoError}</p>
+                  )}
+                  {appliedPromo && !promoError && (
+                    <p className="mt-1 text-xs text-green-700">
+                      {language === 'fr'
+                        ? `Code ${appliedPromo.code} appliqué (${appliedPromo.percentage}% de réduction).`
+                        : `Code ${appliedPromo.code} applied (${appliedPromo.percentage}% discount).`}
+                    </p>
+                  )}
+                </div>
+              )}
               <h2 className="text-xl font-semibold text-red-900 mb-4">
                 {language === 'fr' ? 'Résumé de la commande' : 'Order Summary'}
               </h2>
@@ -449,6 +628,14 @@ export default function CheckoutForm() {
                       <span>{language === 'fr' ? 'Sous-total' : 'Subtotal'}</span>
                       <span>CHF {subtotal.toFixed(2)}</span>
                     </div>
+                    {appliedPromo && discountAmount > 0 && (
+                      <div className="flex justify-between text-sm text-green-700">
+                        <span>
+                          {language === 'fr' ? 'Remise' : 'Discount'} ({appliedPromo.code})
+                        </span>
+                        <span>- CHF {discountAmount.toFixed(2)}</span>
+                      </div>
+                    )}
                     {deliveryMethod === 'delivery' && selectedZone && (
                       <div className="flex justify-between text-sm">
                         <span>{language === 'fr' ? 'Frais de livraison' : 'Delivery Fee'}</span>

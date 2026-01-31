@@ -72,6 +72,8 @@ model Order {
 
   subtotal             Decimal        @db.Decimal(10, 2)
   deliveryFee          Decimal        @db.Decimal(10, 2)
+  discountAmount       Decimal        @db.Decimal(10, 2) @default(0)
+  promoCode            String?
   total                Decimal        @db.Decimal(10, 2)
   currency             String         @default("CHF")
 
@@ -82,6 +84,7 @@ model Order {
   updatedAt            DateTime       @updatedAt
 
   items                OrderItem[]
+  promoRedemptions     PromoCodeRedemption[]
 }
 
 model OrderItem {
@@ -126,4 +129,59 @@ model ContactMessage {
   status      ContactStatus @default(NEW)
   language    Language      @default(EN)
   createdAt   DateTime      @default(now())
+}
+
+enum UserRole {
+  ADMIN
+  CUSTOMER
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String?
+  email        String   @unique
+  passwordHash String
+  role         UserRole @default(CUSTOMER)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  passwordResetTokens PasswordResetToken[]
+  promoRedemptions     PromoCodeRedemption[]
+}
+
+model PasswordResetToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+}
+
+model PromoCode {
+  id         Int       @id @default(autoincrement())
+  code       String    @unique
+  percentage Int
+  active     Boolean   @default(true)
+  isNewcomer Boolean   @default(false)
+
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  redemptions PromoCodeRedemption[]
+}
+
+model PromoCodeRedemption {
+  id          Int       @id @default(autoincrement())
+  promoCode   PromoCode @relation(fields: [promoCodeId], references: [id], onDelete: Cascade)
+  promoCodeId Int
+  order       Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId     Int
+  email       String
+  user        User?     @relation(fields: [userId], references: [id])
+  userId      Int?
+  createdAt   DateTime  @default(now())
+
+  @@unique([promoCodeId, email])
 }

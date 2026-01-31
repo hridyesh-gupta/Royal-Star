@@ -1,14 +1,72 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import CartIcon from './CartIcon';
 import { useLanguage } from './LanguageProvider';
+
+type AuthUser = {
+  id: number;
+  name: string | null;
+  email: string;
+  role: 'ADMIN' | 'CUSTOMER';
+};
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { language, setLanguage } = useLanguage();
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadUser = async () => {
+      try {
+        const response = await fetch('/api/auth/me', { method: 'GET' });
+        if (!response.ok) {
+          if (isMounted) {
+            setUser(null);
+          }
+          return;
+        }
+
+        const data = (await response.json()) as { user: AuthUser | null };
+        if (isMounted) {
+          setUser(data.user ?? null);
+        }
+      } catch {
+        if (isMounted) {
+          setUser(null);
+        }
+      } finally {
+        if (isMounted) {
+          setAuthLoading(false);
+        }
+      }
+    };
+
+    loadUser();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch {
+    } finally {
+      setUser(null);
+      setIsProfileOpen(false);
+      router.push('/');
+    }
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 shadow-lg bg-white/95 backdrop-blur-sm transition-all duration-300">
@@ -70,6 +128,59 @@ export default function Header() {
             <Link href="/reservation" className="bg-brand-red hover:bg-brand-red-dark text-white px-6 py-2 rounded-full font-medium transition-colors whitespace-nowrap cursor-pointer">
               {language === 'fr' ? 'Réserver une table' : 'Reserve Table'}
             </Link>
+            {!authLoading && (
+              user ? (
+                <div className="relative ml-4">
+                  <button
+                    type="button"
+                    onClick={() => setIsProfileOpen((prev) => !prev)}
+                    className="flex items-center space-x-2 bg-white border border-brand-red-soft text-brand-charcoal px-4 py-2 rounded-full text-sm font-medium hover:bg-brand-cream transition-colors cursor-pointer"
+                  >
+                    <span className="max-w-[140px] truncate">
+                      {user.name || user.email}
+                    </span>
+                    <i
+                      className={`ri-arrow-${isProfileOpen ? 'up' : 'down'}-s-line text-base`}
+                    ></i>
+                  </button>
+                  {isProfileOpen && (
+                    <div className="absolute right-0 mt-2 w-52 bg-white border border-brand-red-soft rounded-xl shadow-lg py-2 z-50">
+                      {user.role === 'ADMIN' && (
+                        <Link
+                          href="/admin"
+                          className="block px-4 py-2 text-sm text-brand-charcoal hover:bg-brand-cream cursor-pointer"
+                          onClick={() => setIsProfileOpen(false)}
+                        >
+                          {language === 'fr' ? 'Tableau de bord administrateur' : 'Admin Dashboard'}
+                        </Link>
+                      )}
+                      <button
+                        type="button"
+                        onClick={handleLogout}
+                        className="block w-full text-left px-4 py-2 text-sm text-red-700 hover:bg-red-50 cursor-pointer"
+                      >
+                        {language === 'fr' ? 'Se déconnecter' : 'Logout'}
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="flex items-center space-x-3 ml-4">
+                  <Link
+                    href="/login"
+                    className="bg-white border border-brand-red-soft text-brand-charcoal px-4 py-2 rounded-full text-sm font-medium hover:bg-brand-cream transition-colors cursor-pointer whitespace-nowrap"
+                  >
+                    {language === 'fr' ? 'Connexion' : 'Login'}
+                  </Link>
+                  <Link
+                    href="/register"
+                    className="bg-white border border-brand-red-soft text-brand-charcoal px-4 py-2 rounded-full text-sm font-medium hover:bg-brand-cream transition-colors cursor-pointer whitespace-nowrap"
+                  >
+                    {language === 'fr' ? 'Inscription' : 'Register'}
+                  </Link>
+                </div>
+              )
+            )}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -105,6 +216,42 @@ export default function Header() {
                 <Link href="/reservation" className="bg-brand-red hover:bg-brand-red-dark text-white px-6 py-2 rounded-full font-medium transition-colors text-center whitespace-nowrap cursor-pointer">
                   {language === 'fr' ? 'Réserver une table' : 'Reserve Table'}
                 </Link>
+                {!authLoading && (
+                  user ? (
+                    <>
+                      {user.role === 'ADMIN' && (
+                        <Link
+                          href="/admin"
+                          className="bg-white text-brand-charcoal border border-brand-red-soft px-6 py-2 rounded-full font-medium transition-colors text-center whitespace-nowrap cursor-pointer hover:bg-brand-cream"
+                        >
+                          {language === 'fr' ? 'Tableau de bord admin' : 'Admin Dashboard'}
+                        </Link>
+                      )}
+                      <button
+                        type="button"
+                        onClick={handleLogout}
+                        className="bg-white text-brand-charcoal border border-brand-red-soft px-6 py-2 rounded-full font-medium transition-colors text-center whitespace-nowrap cursor-pointer hover:bg-brand-cream"
+                      >
+                        {language === 'fr' ? 'Se déconnecter' : 'Logout'}
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        href="/login"
+                        className="bg-white text-brand-charcoal border border-brand-red-soft px-6 py-2 rounded-full font-medium transition-colors text-center whitespace-nowrap cursor-pointer hover:bg-brand-cream"
+                      >
+                        {language === 'fr' ? 'Connexion' : 'Login'}
+                      </Link>
+                      <Link
+                        href="/register"
+                        className="bg-white text-brand-charcoal border border-brand-red-soft px-6 py-2 rounded-full font-medium transition-colors text-center whitespace-nowrap cursor-pointer hover:bg-brand-cream"
+                      >
+                        {language === 'fr' ? 'Inscription' : 'Register'}
+                      </Link>
+                    </>
+                  )
+                )}
                 <div className="flex items-center justify-between pt-2">
                   <span className="text-sm text-brand-charcoal">{language === 'fr' ? 'Langue' : 'Language'}</span>
                   <div className="flex items-center space-x-2">

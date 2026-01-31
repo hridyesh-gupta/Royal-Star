@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../lib/prisma";
 import { sendEmail } from "../../../lib/email";
+import { renderBaseEmail } from "../../../lib/emailTemplates";
 
 const OWNER_EMAIL = process.env.OWNER_EMAIL;
 
@@ -60,16 +61,25 @@ export async function POST(request: NextRequest) {
           ? `Nouveau message de contact : ${subject}`
           : `New contact message: ${subject}`;
 
-      const ownerHtml = `
-        <p>${language === "fr" ? "Vous avez reçu un nouveau message via le formulaire de contact." : "You have received a new message from the contact form."}</p>
-        <p><strong>${language === "fr" ? "Nom" : "Name"}:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>${language === "fr" ? "Téléphone" : "Phone"}:</strong> ${phone || "-"}</p>
-        <p><strong>${language === "fr" ? "Reçu le" : "Received at"} (Europe/Zurich):</strong> ${receivedAt}</p>
-        <p><strong>${language === "fr" ? "Sujet" : "Subject"}:</strong> ${subject}</p>
-        <p><strong>${language === "fr" ? "Message" : "Message"}:</strong></p>
-        <p>${message.replace(/\n/g, "<br/>")}</p>
-      `;
+      const ownerHtml = renderBaseEmail({
+        language,
+        title: ownerSubject,
+        introHtml:
+          language === "fr"
+            ? `<p>Bonjour,</p><p>Vous avez reçu un nouveau message via le formulaire de contact de votre site.</p>`
+            : `<p>Hello,</p><p>You have received a new message from the contact form on your website.</p>`,
+        bodyHtml: `
+          <p><strong>${language === "fr" ? "Nom" : "Name"}:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>${language === "fr" ? "Téléphone" : "Phone"}:</strong> ${phone || "-"}</p>
+          <p><strong>${language === "fr" ? "Reçu le" : "Received at"} (Europe/Zurich):</strong> ${receivedAt}</p>
+          <p><strong>${language === "fr" ? "Sujet" : "Subject"}:</strong> ${subject}</p>
+          <p style="margin-top:12px;"><strong>${language === "fr" ? "Message" : "Message"}:</strong></p>
+          <div style="margin-top:4px;padding:10px 12px;border-radius:8px;background:#f9fafb;border:1px solid #e5e7eb;">
+            <p style="margin:0;">${message.replace(/\n/g, "<br/>")}</p>
+          </div>
+        `,
+      });
 
       await sendEmail({
         to: ownerEmail,
@@ -84,24 +94,36 @@ export async function POST(request: NextRequest) {
         ? "Royal Star Café – Nous avons bien reçu votre message"
         : "Royal Star Cafe – We have received your message";
 
-    const customerHtml =
+    const customerIntro =
+      language === "fr"
+        ? `<p>Bonjour ${name},</p>`
+        : `<p>Dear ${name},</p>`;
+
+    const customerBody =
       language === "fr"
         ? `
-          <p>Bonjour ${name},</p>
           <p>Merci de nous avoir contactés. Nous avons bien reçu votre message et nous vous répondrons dans les plus brefs délais.</p>
           <p><strong>Sujet :</strong> ${subject}</p>
           <p><strong>Message :</strong></p>
-          <p>${message.replace(/\n/g, "<br/>")}</p>
-          <p>Cordialement,<br/>Royal Star Café</p>
+          <div style="margin-top:4px;padding:10px 12px;border-radius:8px;background:#f9fafb;border:1px solid #e5e7eb;">
+            <p style="margin:0;">${message.replace(/\n/g, "<br/>")}</p>
+          </div>
         `
         : `
-          <p>Dear ${name},</p>
           <p>Thank you for reaching out. We have received your message and will get back to you as soon as possible.</p>
           <p><strong>Subject:</strong> ${subject}</p>
           <p><strong>Message:</strong></p>
-          <p>${message.replace(/\n/g, "<br/>")}</p>
-          <p>Best regards,<br/>Royal Star Cafe</p>
+          <div style="margin-top:4px;padding:10px 12px;border-radius:8px;background:#f9fafb;border:1px solid #e5e7eb;">
+            <p style="margin:0;">${message.replace(/\n/g, "<br/>")}</p>
+          </div>
         `;
+
+    const customerHtml = renderBaseEmail({
+      language,
+      title: customerSubject,
+      introHtml: customerIntro,
+      bodyHtml: customerBody,
+    });
 
     await sendEmail({
       to: email,
