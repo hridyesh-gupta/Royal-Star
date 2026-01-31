@@ -1,10 +1,13 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import { getUserFromToken } from "../../../../lib/auth";
 
-export async function GET(request: NextRequest) {
+export const dynamic = "force-dynamic";
+
+export async function GET() {
   try {
-    const cookie = request.cookies.get("auth_token");
-    const token = cookie?.value;
+    const cookieStore = cookies();
+    const token = cookieStore.get("auth_token")?.value;
     const user = await getUserFromToken(token ?? null);
 
     if (!user) {

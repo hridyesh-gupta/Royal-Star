@@ -1,7 +1,11 @@
 import crypto from "crypto";
 import { prisma } from "./prisma";
 
-const AUTH_SECRET = process.env.AUTH_SECRET;
+const AUTH_SECRET: string = process.env.AUTH_SECRET as string;
+
+if (!AUTH_SECRET) {
+  throw new Error("AUTH_SECRET environment variable is not set");
+}
 
 type TokenPayload = {
   sub: number;
