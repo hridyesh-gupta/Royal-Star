@@ -26,14 +26,14 @@ export default function Footer() {
                   : 'Discover Swiss hospitality and an exceptional cafe in the heart of Geneva\'s Meyrin district. Where traditional Swiss charm meets the culture of authentic flavors and warm hospitality.'}
               </p>
               <div className="flex space-x-4">
-                <a href="#" className="w-10 h-10 bg-brand-red rounded-full flex items-center justify-center hover:bg-brand-red-dark transition-colors cursor-pointer">
+                <a href="https://www.facebook.com/share/1AUbwaJVge/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-brand-red rounded-full flex items-center justify-center hover:bg-brand-red-dark transition-colors cursor-pointer">
                   <i className="ri-facebook-fill text-white"></i>
                 </a>
-                <a href="#" className="w-10 h-10 bg-brand-red rounded-full flex items-center justify-center hover:bg-brand-red-dark transition-colors cursor-pointer">
+                <a href="https://www.instagram.com/p/DO03aOeCGp7/?img_index=5&igsh=MTdzY3phMXZvNHo4Yw==" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-brand-red rounded-full flex items-center justify-center hover:bg-brand-red-dark transition-colors cursor-pointer">
                   <i className="ri-instagram-line text-white"></i>
                 </a>
-                <a href="#" className="w-10 h-10 bg-brand-red rounded-full flex items-center justify-center hover:bg-brand-red-dark transition-colors cursor-pointer">
-                  <i className="ri-twitter-fill text-white"></i>
+                <a href="https://www.tiktok.com/@royal.star.cafe?_r=1&_t=ZN-93Qb84dpZe2" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-brand-red rounded-full flex items-center justify-center hover:bg-brand-red-dark transition-colors cursor-pointer">
+                  <i className="ri-tiktok-fill text-white"></i>
                 </a>
               </div>
             </div>
